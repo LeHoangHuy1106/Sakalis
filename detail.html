@@ -1,0 +1,1142 @@
+ 
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Đọc bài thơ trong kho lưu trữ Sakalis."
+    >
+
+    <meta
+        name="theme-color"
+        content="#ffffff"
+    >
+
+    <title>Bài thơ | Sakalis</title>
+
+    <!-- Google Fonts -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Shared CSS -->
+    <link
+        rel="stylesheet"
+        href="./assets/css/main.css"
+    >
+
+    <!-- Detail page CSS -->
+    <link
+        rel="stylesheet"
+        href="./assets/css/detail.css"
+    >
+</head>
+
+<body
+    class="inner-page"
+    data-page="detail"
+>
+
+    <a
+        class="skip-link"
+        href="#page-content"
+    >
+        Đi đến nội dung
+    </a>
+
+
+    <div class="site-shell">
+
+        <!-- =====================================================
+             SHARED HEADER
+             ===================================================== -->
+
+        <header class="top-header">
+
+            <div class="top-header-inner">
+
+                <!-- Mobile menu button -->
+
+                <button
+                    class="header-menu-button"
+                    id="header-menu-button"
+                    type="button"
+                    aria-label="Mở menu"
+                    aria-controls="menu-drawer"
+                    aria-expanded="false"
+                >
+                    <span
+                        class="menu-lines"
+                        aria-hidden="true"
+                    >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </button>
+
+
+                <!-- Logo -->
+
+                <a
+                    class="header-brand"
+                    href="./index.html"
+                    aria-label="Sakalis - Trang chủ"
+                >
+                    <span
+                        class="header-brand-feather"
+                        aria-hidden="true"
+                    >
+                        ❧
+                    </span>
+
+                    <span class="header-brand-name">
+                        SAKALIS
+                    </span>
+                </a>
+
+
+                <!-- Desktop navigation -->
+
+                <nav
+                    class="desktop-nav"
+                    aria-label="Điều hướng chính"
+                >
+                    <ul class="desktop-nav-list">
+
+                        <li>
+                            <a
+                                class="desktop-nav-link"
+                                href="./index.html"
+                            >
+                                Trang chủ
+                            </a>
+                        </li>
+
+                        <li>
+                            <a
+                                class="desktop-nav-link"
+                                href="./list.html"
+                            >
+                                Danh sách
+                            </a>
+                        </li>
+
+                        <li>
+                            <a
+                                class="desktop-nav-link"
+                                href="./collection.html?type=collection"
+                            >
+                                Tập thơ
+                            </a>
+                        </li>
+
+                        <li>
+                            <a
+                                class="desktop-nav-link"
+                                href="./collection.html?type=topic"
+                            >
+                                Chủ đề
+                            </a>
+                        </li>
+
+                    </ul>
+                </nav>
+
+
+                <span
+                    class="header-mobile-spacer"
+                    aria-hidden="true"
+                ></span>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             MOBILE MENU OVERLAY
+             ===================================================== -->
+
+        <div
+            class="menu-overlay"
+            id="menu-overlay"
+            aria-hidden="true"
+        ></div>
+
+
+        <!-- =====================================================
+             MOBILE MENU DRAWER
+             ===================================================== -->
+
+        <aside
+            class="menu-drawer"
+            id="menu-drawer"
+            aria-label="Menu điều hướng"
+            aria-hidden="true"
+        >
+
+            <div class="menu-drawer-header">
+
+                <a
+                    class="menu-drawer-brand"
+                    href="./index.html"
+                >
+                    SAKALIS
+                </a>
+
+
+                <button
+                    class="menu-drawer-close"
+                    id="menu-drawer-close"
+                    type="button"
+                    aria-label="Đóng menu"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M5 5L19 19"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M19 5L5 19"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                        />
+                    </svg>
+                </button>
+
+            </div>
+
+
+            <nav aria-label="Điều hướng trên điện thoại">
+
+                <ul class="menu-drawer-list">
+
+                    <li>
+                        <a
+                            class="menu-drawer-link"
+                            href="./index.html"
+                        >
+                            <span>Trang chủ</span>
+                            <span class="menu-drawer-index">01</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            class="menu-drawer-link"
+                            href="./list.html"
+                        >
+                            <span>Danh sách</span>
+                            <span class="menu-drawer-index">02</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            class="menu-drawer-link"
+                            href="./collection.html?type=collection"
+                        >
+                            <span>Tập thơ</span>
+                            <span class="menu-drawer-index">03</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            class="menu-drawer-link"
+                            href="./collection.html?type=topic"
+                        >
+                            <span>Chủ đề</span>
+                            <span class="menu-drawer-index">04</span>
+                        </a>
+                    </li>
+
+                </ul>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- =====================================================
+             PAGE CONTENT
+             ===================================================== -->
+
+        <main
+            class="page-content"
+            id="page-content"
+        >
+
+            <section class="detail-page">
+
+                <div class="detail-page-inner">
+
+                    <!-- Loading -->
+
+                    <div
+                        class="detail-status"
+                        id="detail-status"
+                        aria-live="polite"
+                    >
+                        <div class="loading-state">
+
+                            <span
+                                class="loading-spinner"
+                                aria-hidden="true"
+                            ></span>
+
+                            <span>Đang tải bài thơ</span>
+
+                        </div>
+                    </div>
+
+
+                    <!-- Error -->
+
+                    <section
+                        class="detail-error"
+                        id="detail-error"
+                        hidden
+                    >
+                        <div
+                            class="detail-error-icon"
+                            aria-hidden="true"
+                        >
+                            ❧
+                        </div>
+
+                        <h1 class="detail-error-title">
+                            Không tìm thấy bài thơ
+                        </h1>
+
+                        <p class="detail-error-text">
+                            Bài thơ không tồn tại hoặc đường dẫn đã bị thay đổi.
+                        </p>
+
+                        <a
+                            class="detail-error-button"
+                            href="./list.html"
+                        >
+                            Trở về danh sách
+                        </a>
+                    </section>
+
+
+                    <!-- Article -->
+
+                    <article
+                        class="poem-detail"
+                        id="poem-detail"
+                        hidden
+                    >
+
+                        <!-- Back navigation -->
+
+                        <div class="detail-top-navigation">
+
+                            <a
+                                class="detail-back-link"
+                                id="detail-back-link"
+                                href="./list.html"
+                            >
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="M19 12H5"
+                                        stroke="currentColor"
+                                        stroke-width="1.7"
+                                        stroke-linecap="round"
+                                    />
+
+                                    <path
+                                        d="M10 7L5 12L10 17"
+                                        stroke="currentColor"
+                                        stroke-width="1.7"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+
+                                <span>Quay lại danh sách</span>
+                            </a>
+
+
+                            <div class="detail-actions">
+
+                                <!-- Bookmark -->
+
+                                <button
+                                    class="detail-action-button"
+                                    id="detail-bookmark-button"
+                                    type="button"
+                                    aria-label="Lưu bài thơ"
+                                    aria-pressed="false"
+                                >
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M6.5 4.5C6.5 3.67 7.17 3 8 3H16C16.83 3 17.5 3.67 17.5 4.5V21L12 17.5L6.5 21V4.5Z"
+                                            stroke="currentColor"
+                                            stroke-width="1.7"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                </button>
+
+
+                                <!-- Share -->
+
+                                <button
+                                    class="detail-action-button"
+                                    id="detail-share-button"
+                                    type="button"
+                                    aria-label="Chia sẻ bài thơ"
+                                >
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true"
+                                    >
+                                        <circle
+                                            cx="18"
+                                            cy="5"
+                                            r="2.5"
+                                            stroke="currentColor"
+                                            stroke-width="1.7"
+                                        />
+
+                                        <circle
+                                            cx="6"
+                                            cy="12"
+                                            r="2.5"
+                                            stroke="currentColor"
+                                            stroke-width="1.7"
+                                        />
+
+                                        <circle
+                                            cx="18"
+                                            cy="19"
+                                            r="2.5"
+                                            stroke="currentColor"
+                                            stroke-width="1.7"
+                                        />
+
+                                        <path
+                                            d="M8.3 10.8L15.7 6.2"
+                                            stroke="currentColor"
+                                            stroke-width="1.7"
+                                            stroke-linecap="round"
+                                        />
+
+                                        <path
+                                            d="M8.3 13.2L15.7 17.8"
+                                            stroke="currentColor"
+                                            stroke-width="1.7"
+                                            stroke-linecap="round"
+                                        />
+                                    </svg>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Main layout -->
+
+                        <div class="poem-detail-layout">
+
+                            <!-- Image column -->
+
+                            <aside class="poem-detail-visual">
+
+                                <figure class="poem-detail-figure">
+
+                                    <img
+                                        class="poem-detail-image"
+                                        id="poem-detail-image"
+                                        alt=""
+                                    >
+
+                                    <figcaption
+                                        class="poem-detail-caption"
+                                        id="poem-detail-caption"
+                                    >
+                                        Sakalis Creative Archive
+                                    </figcaption>
+
+                                </figure>
+
+                            </aside>
+
+
+                            <!-- Content column -->
+
+                            <div class="poem-detail-main">
+
+                                <!-- Header -->
+
+                                <header class="poem-detail-header">
+
+                                    <p
+                                        class="poem-detail-eyebrow"
+                                        id="poem-detail-eyebrow"
+                                    >
+                                        Bài thơ
+                                    </p>
+
+
+                                    <h1
+                                        class="poem-detail-title"
+                                        id="poem-detail-title"
+                                    ></h1>
+
+                                    <div
+                                        id="poem-detail-youtube"
+                                        class="poem-detail-youtube"
+                                        hidden
+                                    ></div>
+                                    <div class="poem-detail-divider"></div>
+
+
+                                    <!-- Meta -->
+
+                                    <div class="poem-detail-meta">
+
+                                        <a
+                                            class="poem-detail-meta-item"
+                                            id="poem-detail-collection"
+                                            href="./list.html"
+                                            hidden
+                                        >
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                aria-hidden="true"
+                                            >
+                                                <path
+                                                    d="M4 5.5C6.5 4.2 9.2 4.4 12 6.2V20C9.2 18.2 6.5 18 4 19.3V5.5Z"
+                                                    stroke="currentColor"
+                                                    stroke-width="1.6"
+                                                    stroke-linejoin="round"
+                                                />
+
+                                                <path
+                                                    d="M20 5.5C17.5 4.2 14.8 4.4 12 6.2V20C14.8 18.2 17.5 18 20 19.3V5.5Z"
+                                                    stroke="currentColor"
+                                                    stroke-width="1.6"
+                                                    stroke-linejoin="round"
+                                                />
+                                            </svg>
+
+                                            <span
+                                                id="poem-detail-collection-label"
+                                            ></span>
+                                        </a>
+
+
+                                        <span class="poem-detail-meta-item">
+
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                aria-hidden="true"
+                                            >
+                                                <rect
+                                                    x="4"
+                                                    y="5.5"
+                                                    width="16"
+                                                    height="14"
+                                                    rx="2"
+                                                    stroke="currentColor"
+                                                    stroke-width="1.6"
+                                                />
+
+                                                <path
+                                                    d="M8 3.5V7"
+                                                    stroke="currentColor"
+                                                    stroke-width="1.6"
+                                                    stroke-linecap="round"
+                                                />
+
+                                                <path
+                                                    d="M16 3.5V7"
+                                                    stroke="currentColor"
+                                                    stroke-width="1.6"
+                                                    stroke-linecap="round"
+                                                />
+
+                                                <path
+                                                    d="M4 9.5H20"
+                                                    stroke="currentColor"
+                                                    stroke-width="1.6"
+                                                />
+                                            </svg>
+
+                                            <span id="poem-detail-date">
+                                                Không rõ thời gian
+                                            </span>
+                                        </span>
+
+
+                                        <span class="poem-detail-meta-item">
+
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                aria-hidden="true"
+                                            >
+                                                <path
+                                                    d="M2.5 12C4.8 7.9 8 5.8 12 5.8C16 5.8 19.2 7.9 21.5 12C19.2 16.1 16 18.2 12 18.2C8 18.2 4.8 16.1 2.5 12Z"
+                                                    stroke="currentColor"
+                                                    stroke-width="1.6"
+                                                />
+
+                                                <circle
+                                                    cx="12"
+                                                    cy="12"
+                                                    r="2.8"
+                                                    stroke="currentColor"
+                                                    stroke-width="1.6"
+                                                />
+                                            </svg>
+
+                                            <span id="poem-detail-views">
+                                                0 lượt xem
+                                            </span>
+                                        </span>
+
+                                    </div>
+
+
+                                    <!-- Topics -->
+
+                                    <div
+                                        class="poem-detail-topics"
+                                        id="poem-detail-topics"
+                                        hidden
+                                    ></div>
+
+                                </header>
+
+
+                                <!-- Poem content -->
+
+                                <div
+                                    class="poem-detail-content"
+                                    id="poem-detail-content"
+                                ></div>
+
+
+                                <!-- Signature -->
+
+                                <footer class="poem-detail-signature">
+
+                                    <div
+                                        class="poem-detail-signature-symbol"
+                                        aria-hidden="true"
+                                    >
+                                        ❧
+                                    </div>
+
+                                    <p class="poem-detail-signature-name">
+                                        BNA
+                                    </p>
+
+                                    <p
+                                        class="poem-detail-signature-date"
+                                        id="poem-detail-signature-date"
+                                    ></p>
+
+                                </footer>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Previous and next -->
+
+                        <nav
+                            class="poem-pagination"
+                            aria-label="Bài thơ trước và tiếp theo"
+                        >
+
+                            <a
+                                class="poem-pagination-item poem-pagination-previous"
+                                id="previous-poem-link"
+                                href="#"
+                                hidden
+                            >
+                                <span class="poem-pagination-direction">
+
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M19 12H5"
+                                            stroke="currentColor"
+                                            stroke-width="1.7"
+                                            stroke-linecap="round"
+                                        />
+
+                                        <path
+                                            d="M10 7L5 12L10 17"
+                                            stroke="currentColor"
+                                            stroke-width="1.7"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+
+                                    <span>Bài trước</span>
+
+                                </span>
+
+                                <strong
+                                    class="poem-pagination-title"
+                                    id="previous-poem-title"
+                                ></strong>
+                            </a>
+
+
+                            <a
+                                class="poem-pagination-item poem-pagination-next"
+                                id="next-poem-link"
+                                href="#"
+                                hidden
+                            >
+                                <span class="poem-pagination-direction">
+
+                                    <span>Bài tiếp theo</span>
+
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M5 12H19"
+                                            stroke="currentColor"
+                                            stroke-width="1.7"
+                                            stroke-linecap="round"
+                                        />
+
+                                        <path
+                                            d="M14 7L19 12L14 17"
+                                            stroke="currentColor"
+                                            stroke-width="1.7"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+
+                                </span>
+
+                                <strong
+                                    class="poem-pagination-title"
+                                    id="next-poem-title"
+                                ></strong>
+                            </a>
+
+                        </nav>
+
+
+                        <!-- Related poems -->
+
+                        <section
+                            class="related-poems"
+                            id="related-poems-section"
+                            hidden
+                            aria-labelledby="related-poems-title"
+                        >
+
+                            <div class="related-poems-heading">
+
+                                <div>
+
+                                    <p class="related-poems-eyebrow">
+                                        Có thể bạn sẽ muốn đọc
+                                    </p>
+
+                                    <h2
+                                        class="related-poems-title"
+                                        id="related-poems-title"
+                                    >
+                                        Bài thơ liên quan
+                                    </h2>
+
+                                </div>
+
+
+                                <a
+                                    class="related-poems-view-all"
+                                    id="related-poems-view-all"
+                                    href="./list.html"
+                                >
+                                    <span>Xem tất cả</span>
+
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M5 12H19"
+                                            stroke="currentColor"
+                                            stroke-width="1.7"
+                                            stroke-linecap="round"
+                                        />
+
+                                        <path
+                                            d="M14 7L19 12L14 17"
+                                            stroke="currentColor"
+                                            stroke-width="1.7"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                </a>
+
+                            </div>
+
+
+                            <div
+                                class="related-poems-grid"
+                                id="related-poems-grid"
+                            ></div>
+
+                        </section>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <!-- =====================================================
+             MOBILE BOTTOM NAVIGATION
+             ===================================================== -->
+
+        <nav
+            class="bottom-nav"
+            aria-label="Điều hướng dưới cùng"
+        >
+            <ul class="bottom-nav-list">
+
+                <li>
+                    <a
+                        class="bottom-nav-link"
+                        href="./index.html"
+                    >
+                        <span class="bottom-nav-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M3.5 10.5L12 3.5L20.5 10.5V20H14.5V14H9.5V20H3.5V10.5Z"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+
+                        </span>
+
+                        <span>Trang chủ</span>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a
+                        class="bottom-nav-link"
+                        href="./list.html"
+                    >
+                        <span class="bottom-nav-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M8 6H20"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                />
+
+                                <path
+                                    d="M8 12H20"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                />
+
+                                <path
+                                    d="M8 18H20"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                />
+
+                                <circle
+                                    cx="4"
+                                    cy="6"
+                                    r="1"
+                                    fill="currentColor"
+                                />
+
+                                <circle
+                                    cx="4"
+                                    cy="12"
+                                    r="1"
+                                    fill="currentColor"
+                                />
+
+                                <circle
+                                    cx="4"
+                                    cy="18"
+                                    r="1"
+                                    fill="currentColor"
+                                />
+                            </svg>
+
+                        </span>
+
+                        <span>Danh sách</span>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a
+                        class="bottom-nav-link"
+                        href="./collection.html?type=collection"
+                    >
+                        <span class="bottom-nav-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M4 5.5C6.5 4.2 9.2 4.4 12 6.2V20C9.2 18.2 6.5 18 4 19.3V5.5Z"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linejoin="round"
+                                />
+
+                                <path
+                                    d="M20 5.5C17.5 4.2 14.8 4.4 12 6.2V20C14.8 18.2 17.5 18 20 19.3V5.5Z"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+
+                        </span>
+
+                        <span>Tập thơ</span>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a
+                        class="bottom-nav-link"
+                        href="./collection.html?type=topic"
+                    >
+                        <span class="bottom-nav-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M19.8 3.5C13.8 4 7.6 7.1 5.2 13.4C4.4 15.4 4.5 17.2 5.1 18.8C6.7 19.4 8.5 19.5 10.5 18.7C16.8 16.3 19.9 10.1 20.4 4.1C20.4 3.7 20.1 3.4 19.8 3.5Z"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linejoin="round"
+                                />
+
+                                <path
+                                    d="M4 21C7.5 15.7 11.5 11.7 17 8"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                />
+                            </svg>
+
+                        </span>
+
+                        <span>Chủ đề</span>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+
+    </div>
+
+
+    <!-- =========================================================
+         TOPIC TEMPLATE
+         ========================================================= -->
+
+    <template id="detail-topic-template">
+
+        <a
+            class="poem-detail-topic"
+            data-field="link"
+            href="#"
+        >
+            <span data-field="title"></span>
+        </a>
+
+    </template>
+
+
+    <!-- =========================================================
+         RELATED POEM TEMPLATE
+         ========================================================= -->
+
+    <template id="related-poem-template">
+
+        <article class="related-poem-card">
+
+            <a
+                class="related-poem-media"
+                data-field="media-link"
+                href="#"
+                tabindex="-1"
+                aria-hidden="true"
+            >
+                <img
+                    class="related-poem-image"
+                    data-field="image"
+                    alt=""
+                    loading="lazy"
+                >
+            </a>
+
+
+            <div class="related-poem-content">
+
+                <p
+                    class="related-poem-category"
+                    data-field="category"
+                ></p>
+
+
+                <h3 class="related-poem-name">
+
+                    <a
+                        data-field="title-link"
+                        href="#"
+                    >
+                        <span data-field="title"></span>
+                    </a>
+
+                </h3>
+
+
+                <div class="related-poem-meta">
+
+                    <span data-field="year"></span>
+
+                    <span
+                        class="related-poem-meta-dot"
+                        aria-hidden="true"
+                    >
+                        •
+                    </span>
+
+                    <span data-field="views"></span>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    </template>
+
+
+    <!-- Toast -->
+
+    <div
+        class="detail-toast"
+        id="detail-toast"
+        role="status"
+        aria-live="polite"
+        hidden
+    ></div>
+
+
+    <script
+        type="module"
+        src="./assets/js/detail.js?v=10">
+    </script>
+<script src="./assets/js/detail-music.js"></script>
+</body>
+</html>

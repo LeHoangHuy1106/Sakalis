@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Khám phá các tập thơ và chủ đề trong kho lưu trữ Sakalis."
+    >
+
+    <meta
+        name="theme-color"
+        content="#ffffff"
+    >
+
+    <title>Tập thơ | Sakalis</title>
+
+    <!-- Google Fonts -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Main CSS -->
+    <link
+        rel="stylesheet"
+        href="./assets/css/main.css"
+    >
+    <link
+    rel="stylesheet"
+    href="./assets/css/collection.css"
+    >
+</head>
+
+<body
+    class="inner-page"
+    data-page="collection"
+>
+
+    <!-- Accessibility -->
+    <a
+        class="skip-link"
+        href="#page-content"
+    >
+        Đi đến nội dung
+    </a>
+
+
+    <div class="site-shell">
+
+        <!-- =====================================================
+             SHARED HEADER
+             ===================================================== -->
+
+        <header class="top-header">
+
+            <div class="top-header-inner">
+
+                <!-- Mobile menu button -->
+                <button
+                    class="header-menu-button"
+                    id="header-menu-button"
+                    type="button"
+                    aria-label="Mở menu"
+                    aria-controls="menu-drawer"
+                    aria-expanded="false"
+                >
+                    <span
+                        class="menu-lines"
+                        aria-hidden="true"
+                    >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </button>
+
+
+                <!-- Logo -->
+                <a
+                    class="header-brand"
+                    href="./index.html"
+                    aria-label="Sakalis - Trang chủ"
+                >
+                    <span
+                        class="header-brand-feather"
+                        aria-hidden="true"
+                    >
+                        ❧
+                    </span>
+
+                    <span class="header-brand-name">
+                        SAKALIS
+                    </span>
+                </a>
+
+
+                <!-- Desktop navigation -->
+                <nav
+                    class="desktop-nav"
+                    aria-label="Điều hướng chính"
+                >
+                    <ul class="desktop-nav-list">
+
+                        <li>
+                            <a
+                                class="desktop-nav-link"
+                                href="./index.html"
+                            >
+                                Trang chủ
+                            </a>
+                        </li>
+
+                        <li>
+                            <a
+                                class="desktop-nav-link"
+                                href="./list.html"
+                            >
+                                Danh sách
+                            </a>
+                        </li>
+
+                        <li>
+                            <a
+                                class="desktop-nav-link"
+                                id="desktop-collection-link"
+                                href="./collection.html?type=collection"
+                            >
+                                Tập thơ
+                            </a>
+                        </li>
+
+                        <li>
+                            <a
+                                class="desktop-nav-link"
+                                id="desktop-topic-link"
+                                href="./collection.html?type=topic"
+                            >
+                                Chủ đề
+                            </a>
+                        </li>
+
+                    </ul>
+                </nav>
+
+
+                <!-- Mobile spacer -->
+                <span
+                    class="header-mobile-spacer"
+                    aria-hidden="true"
+                ></span>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             MOBILE MENU OVERLAY
+             ===================================================== -->
+
+        <div
+            class="menu-overlay"
+            id="menu-overlay"
+            aria-hidden="true"
+        ></div>
+
+
+        <!-- =====================================================
+             MOBILE MENU DRAWER
+             ===================================================== -->
+
+        <aside
+            class="menu-drawer"
+            id="menu-drawer"
+            aria-label="Menu điều hướng"
+            aria-hidden="true"
+        >
+
+            <div class="menu-drawer-header">
+
+                <a
+                    class="menu-drawer-brand"
+                    href="./index.html"
+                >
+                    SAKALIS
+                </a>
+
+
+                <button
+                    class="menu-drawer-close"
+                    id="menu-drawer-close"
+                    type="button"
+                    aria-label="Đóng menu"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M5 5L19 19"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M19 5L5 19"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                        />
+                    </svg>
+                </button>
+
+            </div>
+
+
+            <nav aria-label="Điều hướng trên điện thoại">
+
+                <ul class="menu-drawer-list">
+
+                    <li>
+                        <a
+                            class="menu-drawer-link"
+                            href="./index.html"
+                        >
+                            <span>Trang chủ</span>
+
+                            <span class="menu-drawer-index">
+                                01
+                            </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            class="menu-drawer-link"
+                            href="./list.html"
+                        >
+                            <span>Danh sách</span>
+
+                            <span class="menu-drawer-index">
+                                02
+                            </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            class="menu-drawer-link"
+                            href="./collection.html?type=collection"
+                        >
+                            <span>Tập thơ</span>
+
+                            <span class="menu-drawer-index">
+                                03
+                            </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            class="menu-drawer-link"
+                            href="./collection.html?type=topic"
+                        >
+                            <span>Chủ đề</span>
+
+                            <span class="menu-drawer-index">
+                                04
+                            </span>
+                        </a>
+                    </li>
+
+                </ul>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- =====================================================
+             PAGE CONTENT
+             ===================================================== -->
+
+        <main
+            class="page-content"
+            id="page-content"
+        >
+
+            <section class="catalog-page">
+
+                <div class="catalog-page-inner">
+
+                    <!-- Page header -->
+
+                    <header class="catalog-page-header">
+
+                        <p
+                            class="catalog-page-eyebrow"
+                            id="catalog-page-eyebrow"
+                        >
+                            Kho lưu trữ Sakalis
+                        </p>
+
+
+                        <h1
+                            class="catalog-page-title"
+                            id="catalog-page-title"
+                        >
+                            TẬP THƠ
+                        </h1>
+
+
+                        <p
+                            class="catalog-page-description"
+                            id="catalog-page-description"
+                        >
+                            Những tập thơ lưu giữ từng giai đoạn,
+                            cảm xúc và hành trình sáng tác.
+                        </p>
+
+
+                        <p
+                            class="catalog-result-summary"
+                            id="catalog-result-summary"
+                            aria-live="polite"
+                        >
+                            Đang tải dữ liệu...
+                        </p>
+
+                    </header>
+
+
+                    <!-- Search -->
+
+                    <form
+                        class="catalog-toolbar"
+                        id="catalog-search-form"
+                        role="search"
+                    >
+
+                        <label class="catalog-search">
+
+                            <span class="visually-hidden">
+                                Tìm kiếm
+                            </span>
+
+
+                            <svg
+                                class="catalog-search-icon"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                aria-hidden="true"
+                            >
+                                <circle
+                                    cx="11"
+                                    cy="11"
+                                    r="6.5"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                />
+
+                                <path
+                                    d="M16 16L21 21"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                />
+                            </svg>
+
+
+                            <input
+                                class="catalog-search-input"
+                                id="catalog-search-input"
+                                name="q"
+                                type="search"
+                                placeholder="Tìm tập thơ..."
+                                autocomplete="off"
+                            >
+
+
+                            <button
+                                class="catalog-search-clear"
+                                id="catalog-search-clear"
+                                type="button"
+                                aria-label="Xóa tìm kiếm"
+                                hidden
+                            >
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="M7 7L17 17"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                    />
+
+                                    <path
+                                        d="M17 7L7 17"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                    />
+                                </svg>
+                            </button>
+
+                        </label>
+
+                    </form>
+
+
+                    <!-- Loading / Error status -->
+
+                    <div
+                        class="catalog-status"
+                        id="catalog-status"
+                        aria-live="polite"
+                    >
+                        <div class="loading-state">
+
+                            <span
+                                class="loading-spinner"
+                                aria-hidden="true"
+                            ></span>
+
+                            <span id="catalog-loading-label">
+                                Đang tải tập thơ
+                            </span>
+
+                        </div>
+                    </div>
+
+
+                    <!-- Collection or topic grid -->
+
+                    <div
+                        class="catalog-grid"
+                        id="catalog-grid"
+                        aria-live="polite"
+                    ></div>
+
+
+                    <!-- Load more -->
+
+                    <div
+                        class="catalog-load-more-wrapper"
+                        id="catalog-load-more-wrapper"
+                        hidden
+                    >
+                        <button
+                            class="catalog-load-more-button"
+                            id="catalog-load-more-button"
+                            type="button"
+                        >
+                            Xem thêm
+                        </button>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <!-- =====================================================
+             SHARED MOBILE FOOTER NAVIGATION
+             ===================================================== -->
+
+        <nav
+            class="bottom-nav"
+            aria-label="Điều hướng dưới cùng"
+        >
+            <ul class="bottom-nav-list">
+
+                <!-- Trang chủ -->
+
+                <li>
+                    <a
+                        class="bottom-nav-link"
+                        href="./index.html"
+                    >
+                        <span class="bottom-nav-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M3.5 10.5L12 3.5L20.5 10.5V20H14.5V14H9.5V20H3.5V10.5Z"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+
+                        </span>
+
+                        <span>Trang chủ</span>
+                    </a>
+                </li>
+
+
+                <!-- Danh sách -->
+
+                <li>
+                    <a
+                        class="bottom-nav-link"
+                        href="./list.html"
+                    >
+                        <span class="bottom-nav-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M8 6H20"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                />
+
+                                <path
+                                    d="M8 12H20"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                />
+
+                                <path
+                                    d="M8 18H20"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                />
+
+                                <circle
+                                    cx="4"
+                                    cy="6"
+                                    r="1"
+                                    fill="currentColor"
+                                />
+
+                                <circle
+                                    cx="4"
+                                    cy="12"
+                                    r="1"
+                                    fill="currentColor"
+                                />
+
+                                <circle
+                                    cx="4"
+                                    cy="18"
+                                    r="1"
+                                    fill="currentColor"
+                                />
+                            </svg>
+
+                        </span>
+
+                        <span>Danh sách</span>
+                    </a>
+                </li>
+
+
+                <!-- Tập thơ -->
+
+                <li>
+                    <a
+                        class="bottom-nav-link"
+                        id="bottom-collection-link"
+                        href="./collection.html?type=collection"
+                    >
+                        <span class="bottom-nav-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M4 5.5C6.5 4.2 9.2 4.4 12 6.2V20C9.2 18.2 6.5 18 4 19.3V5.5Z"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linejoin="round"
+                                />
+
+                                <path
+                                    d="M20 5.5C17.5 4.2 14.8 4.4 12 6.2V20C14.8 18.2 17.5 18 20 19.3V5.5Z"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+
+                        </span>
+
+                        <span>Tập thơ</span>
+                    </a>
+                </li>
+
+
+                <!-- Chủ đề -->
+
+                <li>
+                    <a
+                        class="bottom-nav-link"
+                        id="bottom-topic-link"
+                        href="./collection.html?type=topic"
+                    >
+                        <span class="bottom-nav-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M19.8 3.5C13.8 4 7.6 7.1 5.2 13.4C4.4 15.4 4.5 17.2 5.1 18.8C6.7 19.4 8.5 19.5 10.5 18.7C16.8 16.3 19.9 10.1 20.4 4.1C20.4 3.7 20.1 3.4 19.8 3.5Z"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linejoin="round"
+                                />
+
+                                <path
+                                    d="M4 21C7.5 15.7 11.5 11.7 17 8"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                />
+                            </svg>
+
+                        </span>
+
+                        <span>Chủ đề</span>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+
+    </div>
+
+
+    <!-- =========================================================
+         COLLECTION CARD TEMPLATE
+         ========================================================= -->
+
+    <template id="catalog-card-template">
+
+        <article class="catalog-card">
+
+            <a
+                class="catalog-card-media"
+                data-field="media-link"
+                href="#"
+                tabindex="-1"
+                aria-hidden="true"
+            >
+                <img
+                    class="catalog-card-image"
+                    data-field="image"
+                    alt=""
+                    loading="lazy"
+                >
+
+
+                <span
+                    class="catalog-card-count"
+                    data-field="count-badge"
+                >
+                    0 bài thơ
+                </span>
+            </a>
+
+
+            <div class="catalog-card-content">
+
+                <p
+                    class="catalog-card-type"
+                    data-field="type"
+                >
+                    Tập thơ
+                </p>
+
+
+                <h2 class="catalog-card-title">
+
+                    <a
+                        data-field="title-link"
+                        href="#"
+                    >
+                        <span data-field="title"></span>
+                    </a>
+
+                </h2>
+
+
+                <p
+                    class="catalog-card-description"
+                    data-field="description"
+                ></p>
+
+
+                <div class="catalog-card-footer">
+
+                    <span class="catalog-card-meta">
+
+                        <svg
+                            data-field="meta-icon-collection"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
+                        >
+                            <path
+                                d="M4 5.5C6.5 4.2 9.2 4.4 12 6.2V20C9.2 18.2 6.5 18 4 19.3V5.5Z"
+                                stroke="currentColor"
+                                stroke-width="1.6"
+                                stroke-linejoin="round"
+                            />
+
+                            <path
+                                d="M20 5.5C17.5 4.2 14.8 4.4 12 6.2V20C14.8 18.2 17.5 18 20 19.3V5.5Z"
+                                stroke="currentColor"
+                                stroke-width="1.6"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+
+
+                        <svg
+                            data-field="meta-icon-topic"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
+                            hidden
+                        >
+                            <path
+                                d="M19.8 3.5C13.8 4 7.6 7.1 5.2 13.4C4.4 15.4 4.5 17.2 5.1 18.8C6.7 19.4 8.5 19.5 10.5 18.7C16.8 16.3 19.9 10.1 20.4 4.1C20.4 3.7 20.1 3.4 19.8 3.5Z"
+                                stroke="currentColor"
+                                stroke-width="1.6"
+                                stroke-linejoin="round"
+                            />
+
+                            <path
+                                d="M4 21C7.5 15.7 11.5 11.7 17 8"
+                                stroke="currentColor"
+                                stroke-width="1.6"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+
+
+                        <span data-field="count">
+                            0 bài thơ
+                        </span>
+
+                    </span>
+
+
+                    <a
+                        class="catalog-card-button"
+                        data-field="button-link"
+                        href="#"
+                    >
+                        <span>Xem thơ</span>
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
+                        >
+                            <path
+                                d="M5 12H19"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                            />
+
+                            <path
+                                d="M14 7L19 12L14 17"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    </template>
+
+
+    <!-- =========================================================
+         EMPTY STATE TEMPLATE
+         ========================================================= -->
+
+    <template id="catalog-empty-template">
+
+        <div class="catalog-empty-state">
+
+            <div
+                class="catalog-empty-icon"
+                aria-hidden="true"
+            >
+                ❧
+            </div>
+
+
+            <h2 class="catalog-empty-title">
+                Không tìm thấy dữ liệu
+            </h2>
+
+
+            <p
+                class="catalog-empty-text"
+                data-field="message"
+            >
+                Không có kết quả phù hợp với tìm kiếm hiện tại.
+            </p>
+
+        </div>
+
+    </template>
+
+
+    <!-- Collection JavaScript -->
+    <script
+        type="module"
+        src="./assets/js/collection.js"
+    ></script>
+
+</body>
+</html>
