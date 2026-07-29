@@ -6,7 +6,7 @@
 const IMAGE_CONFIG = Object.freeze({
     prefix: "image-",
     extension: "webp",
-    count: 2,
+    count: 11,
     numberLength: 2
 });
 

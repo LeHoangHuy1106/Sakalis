@@ -46,7 +46,7 @@ const CONFIG = Object.freeze({
          * ...
          * image-20.webp
          */
-        count: 2,
+        count: 11,
 
         /*
          * image-01 thay vì image-1.

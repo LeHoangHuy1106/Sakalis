@@ -2313,8 +2313,7 @@ function initializeMobileMenu() {
    VIEW TRACKING
    Mỗi lần mở bài thơ sẽ tính 1 view
    ========================================================= */
-
-async function incrementCurrentPoemView() {
+function incrementCurrentPoemView() {
     if (
         !state.currentPoem ||
         state.viewIsSending
@@ -2325,10 +2324,14 @@ async function incrementCurrentPoemView() {
     state.viewIsSending = true;
 
     const poemId =
-        String(state.currentPoem.id).trim();
+        String(
+            state.currentPoem.id
+        ).trim();
 
     const requestUrl =
-        new URL(CONFIG.viewApiUrl);
+        new URL(
+            CONFIG.viewApiUrl
+        );
 
     requestUrl.searchParams.set(
         "action",
@@ -2345,50 +2348,44 @@ async function incrementCurrentPoemView() {
         String(Date.now())
     );
 
-    try {
-        const response =
-            await fetch(
-                requestUrl.toString(),
-                {
-                    method: "GET",
-                    cache: "no-store"
-                }
-            );
+    const trackingImage =
+        new Image();
 
-        if (!response.ok) {
-            throw new Error(
-                `HTTP ${response.status}`
-            );
-        }
+    trackingImage.style.display =
+        "none";
 
-        const result =
-            await response.json();
+    trackingImage.onload =
+        trackingImage.onerror =
+        () => {
+            trackingImage.remove();
 
-        if (!result.success) {
-            throw new Error(
-                result.message ||
-                "API không tăng được view."
-            );
-        }
+            state.viewIsSending =
+                false;
+        };
 
-        state.currentPoem.views =
-            Number(result.views) || 0;
+    trackingImage.src =
+        requestUrl.toString();
 
-        elements.views.textContent =
-            `${formatNumber(result.views)} lượt xem`;
+    document.body.append(
+        trackingImage
+    );
 
-        console.info(
-            `[Sakalis] Đã tăng view bài ${poemId}:`,
-            result
-        );
-    } catch (error) {
-        console.error(
-            `[Sakalis] Tăng view thất bại cho bài ${poemId}:`,
-            error
-        );
-    } finally {
-        state.viewIsSending = false;
-    }
+    const newViews =
+        (
+            Number(
+                state.currentPoem.views
+            ) || 0
+        ) + 1;
+
+    state.currentPoem.views =
+        newViews;
+
+    elements.views.textContent =
+        `${formatNumber(newViews)} lượt xem`;
+
+    console.info(
+        `[Sakalis] Đã gửi view cho bài ${poemId}.`
+    );
 }
 async function initialize() {
     initializeMobileMenu();
