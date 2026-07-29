@@ -227,6 +227,20 @@ function setLink(element, url) {
     element.href = url;
 }
 
+function toTitleCase(text) {
+     const value = String(text || "")
+        .trim()
+        .toLocaleLowerCase("vi-VN");
+
+    if (!value) {
+        return "";
+    }
+
+    return (
+        value.charAt(0).toLocaleUpperCase("vi-VN") +
+        value.slice(1)
+    );
+}
 
 function getTemplateField(root, fieldName) {
     return root.querySelector(
@@ -1162,31 +1176,27 @@ function createPoemUrl(poem) {
 }
 
 
-function createCollectionUrl(
-    collectionName
-) {
-    const parameters = new URLSearchParams({
-        type: "collection",
-        name: collectionName
-    });
+function createCollectionUrl(collectionName) {
+    const name = String(
+        collectionName || ""
+    ).trim();
+
+    if (!name) {
+        return "./list.html";
+    }
 
     return (
-        `./collection.html?${parameters.toString()}`
+        "./list.html?collection=" +
+        encodeURIComponent(name)
     );
 }
 
 
 function createTopicUrl(topicName) {
-    const parameters = new URLSearchParams({
-        type: "topic",
-        name: topicName
-    });
-
     return (
-        `./collection.html?${parameters.toString()}`
+        `./list.html?topic=${encodeURIComponent(topicName)}`
     );
 }
-
 
 /* =========================================================
    14. FORMATTERS
@@ -1531,7 +1541,7 @@ function renderPoems(poems) {
 
         setText(
             titleElement,
-            poem.title
+            toTitleCase(poem.title)
         );
 
         setText(
@@ -1602,40 +1612,40 @@ function renderTopics(poems) {
         return;
     }
 
-    topics.forEach((topic) => {
-        const topicPill = cloneTemplate(
-            "topic-pill-template"
-        );
-
-        const linkElement =
-            getTemplateField(
-                topicPill,
-                "link"
+   topics.forEach((topic) => {
+            const pill = cloneTemplate(
+                "topic-pill-template"
             );
 
-        const titleElement =
-            getTemplateField(
-                topicPill,
-                "title"
+            const linkElement = pill;
+
+            const titleElement =
+                getTemplateField(
+                    pill,
+                    "title"
+                );
+
+            const topicName =
+                typeof topic === "string"
+                    ? topic
+                    : (
+                        topic.title ||
+                        topic.name ||
+                        ""
+                    );
+
+            setText(
+                titleElement,
+                topicName
             );
 
-        setLink(
-            linkElement,
-            createTopicUrl(topic.title)
-        );
+            setLink(
+                linkElement,
+                createTopicUrl(topicName)
+            );
 
-        setText(
-            titleElement,
-            topic.title
-        );
-
-        if (linkElement) {
-            linkElement.title =
-                `${topic.count} bài thơ`;
-        }
-
-        container.append(topicPill);
-    });
+            container.append(pill);
+        });
 }
 
 

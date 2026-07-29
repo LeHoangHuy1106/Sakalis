@@ -22,14 +22,10 @@ const CONFIG = Object.freeze({
 
     bookmarkStorageKey:
         "sakalis-bookmarks",
-viewApiUrl:
-    "https://script.google.com/macros/s/AKfycbxhDb3472BOmdCw4AvmPDpCR6bBFl2yCJwdLBCIrVHla9fYb2xnolNeulnY-2cQZQ1qJw/exec",
-    viewStorageKey:
-        "sakalis-counted-views"
-        
+
+    viewApiUrl:
+        "https://script.google.com/macros/s/AKfycbxhDb3472BOmdCw4AvmPDpCR6bBFl2yCJwdLBCIrVHla9fYb2xnolNeulnY-2cQZQ1qJw/exec"
 });
-
-
 /* =========================================================
    2. COLUMN ALIASES
    ========================================================= */
@@ -166,16 +162,7 @@ const state = {
 
     toastTimeoutId: null,
 
-    viewTimerId: null,
-
-    viewElapsedMilliseconds: 0,
-
-    viewLastStartedAt: null,
-
-    viewHasBeenCounted: false,
-
-    viewIsSending: false,
-   
+    viewIsSending: false
 };
 
 /* =========================================================
@@ -2324,164 +2311,12 @@ function initializeMobileMenu() {
    ========================================================= */
 /* =========================================================
    VIEW TRACKING
-   Chỉ tính thời gian khi tab đang hiển thị
-   ========================================================= */
-
-function initializeViewTracking() {
-    if (!state.currentPoem) {
-        return;
-    }
-
-    state.viewHasBeenCounted =
-        hasCountedViewInSession(
-            state.currentPoem.id
-        );
-
-    if (state.viewHasBeenCounted) {
-        return;
-    }
-
-    document.addEventListener(
-        "visibilitychange",
-        handleViewVisibilityChange
-    );
-
-    window.addEventListener(
-        "pagehide",
-        pauseViewTimer
-    );
-
-    window.addEventListener(
-        "pageshow",
-        handlePageShow
-    );
-
-    if (
-        document.visibilityState ===
-        "visible"
-    ) {
-        startViewTimer();
-    }
-}
-
-
-function handleViewVisibilityChange() {
-    if (
-        document.visibilityState ===
-        "visible"
-    ) {
-        startViewTimer();
-    } else {
-        pauseViewTimer();
-    }
-}
-
-
-function handlePageShow() {
-    if (
-        document.visibilityState ===
-        "visible"
-    ) {
-        startViewTimer();
-    }
-}
-
-
-function startViewTimer() {
-    if (
-        state.viewHasBeenCounted ||
-        state.viewIsSending ||
-        state.viewTimerId !== null
-    ) {
-        return;
-    }
-
-    state.viewLastStartedAt =
-        Date.now();
-
-    const remainingTime =
-        Math.max(
-            0,
-            CONFIG.viewDelayMilliseconds -
-            state.viewElapsedMilliseconds
-        );
-
-    state.viewTimerId =
-        window.setTimeout(
-            completeViewTimer,
-            remainingTime
-        );
-}
-
-
-function pauseViewTimer() {
-    if (
-        state.viewTimerId === null ||
-        state.viewLastStartedAt === null
-    ) {
-        return;
-    }
-
-    const elapsedSinceStart =
-        Date.now() -
-        state.viewLastStartedAt;
-
-    state.viewElapsedMilliseconds +=
-        elapsedSinceStart;
-
-    window.clearTimeout(
-        state.viewTimerId
-    );
-
-    state.viewTimerId = null;
-
-    state.viewLastStartedAt = null;
-}
-
-
-async function completeViewTimer() {
-    if (
-        state.viewTimerId !== null
-    ) {
-        window.clearTimeout(
-            state.viewTimerId
-        );
-    }
-
-    state.viewTimerId = null;
-
-    if (
-        state.viewLastStartedAt !== null
-    ) {
-        state.viewElapsedMilliseconds +=
-            Date.now() -
-            state.viewLastStartedAt;
-    }
-
-    state.viewLastStartedAt = null;
-
-
-    if (
-        state.viewElapsedMilliseconds <
-        CONFIG.viewDelayMilliseconds
-    ) {
-        startViewTimer();
-        return;
-    }
-
-
-    await incrementCurrentPoemView();
-}
-
-
-/* =========================================================
-   SEND VIEW
+   Mỗi lần mở bài thơ sẽ tính 1 view
    ========================================================= */
 
 async function incrementCurrentPoemView() {
     if (
         !state.currentPoem ||
-        state.viewHasBeenCounted ||
         state.viewIsSending
     ) {
         return;
@@ -2489,13 +2324,11 @@ async function incrementCurrentPoemView() {
 
     state.viewIsSending = true;
 
-    const poemId = String(
-        state.currentPoem.id
-    );
+    const poemId =
+        String(state.currentPoem.id).trim();
 
-    const requestUrl = new URL(
-        CONFIG.viewApiUrl
-    );
+    const requestUrl =
+        new URL(CONFIG.viewApiUrl);
 
     requestUrl.searchParams.set(
         "action",
@@ -2513,163 +2346,49 @@ async function incrementCurrentPoemView() {
     );
 
     try {
-        await fetch(
-            requestUrl.toString(),
-            {
-                method: "GET",
-                mode: "no-cors",
-                cache: "no-store",
-                keepalive: true
-            }
-        );
+        const response =
+            await fetch(
+                requestUrl.toString(),
+                {
+                    method: "GET",
+                    cache: "no-store"
+                }
+            );
 
-        state.viewHasBeenCounted = true;
+        if (!response.ok) {
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+        }
 
-        markViewAsCountedInSession(
-            poemId
-        );
+        const result =
+            await response.json();
 
-        const currentViews =
-            Number(state.currentPoem.views) || 0;
-
-        const newViews =
-            currentViews + 1;
+        if (!result.success) {
+            throw new Error(
+                result.message ||
+                "API không tăng được view."
+            );
+        }
 
         state.currentPoem.views =
-            newViews;
+            Number(result.views) || 0;
 
         elements.views.textContent =
-            `${formatNumber(newViews)} lượt xem`;
-
-        cleanupViewTracking();
+            `${formatNumber(result.views)} lượt xem`;
 
         console.info(
-            `[Sakalis] Đã gửi view cho bài ${poemId}.`
-        );
-
-    } catch (error) {
-        console.warn(
-            "[Sakalis] Không thể gửi view.",
-            error
-        );
-
-        state.viewElapsedMilliseconds =
-            CONFIG.viewDelayMilliseconds - 5000;
-
-        window.setTimeout(
-            () => {
-                state.viewIsSending = false;
-
-                if (
-                    document.visibilityState ===
-                    "visible"
-                ) {
-                    startViewTimer();
-                }
-            },
-            5000
-        );
-
-        return;
-    }
-
-    state.viewIsSending = false;
-}
-
-
-/* =========================================================
-   SESSION DEDUPLICATION
-   ========================================================= */
-
-function getCountedViews() {
-    try {
-        const rawValue =
-            window.sessionStorage.getItem(
-                CONFIG.viewStorageKey
-            );
-
-        const parsedValue =
-            JSON.parse(
-                rawValue || "[]"
-            );
-
-        return Array.isArray(parsedValue)
-            ? parsedValue.map(String)
-            : [];
-
-    } catch {
-        return [];
-    }
-}
-
-
-function hasCountedViewInSession(poemId) {
-    return getCountedViews()
-        .includes(
-            String(poemId)
-        );
-}
-
-
-function markViewAsCountedInSession(
-    poemId
-) {
-    const countedViews =
-        new Set(
-            getCountedViews()
-        );
-
-    countedViews.add(
-        String(poemId)
-    );
-
-    try {
-        window.sessionStorage.setItem(
-            CONFIG.viewStorageKey,
-            JSON.stringify(
-                [...countedViews]
-            )
+            `[Sakalis] Đã tăng view bài ${poemId}:`,
+            result
         );
     } catch (error) {
-        console.warn(
-            "[Sakalis] Không thể lưu trạng thái view.",
+        console.error(
+            `[Sakalis] Tăng view thất bại cho bài ${poemId}:`,
             error
         );
+    } finally {
+        state.viewIsSending = false;
     }
-}
-
-
-/* =========================================================
-   VIEW CLEANUP
-   ========================================================= */
-
-function cleanupViewTracking() {
-    if (
-        state.viewTimerId !== null
-    ) {
-        window.clearTimeout(
-            state.viewTimerId
-        );
-    }
-
-    state.viewTimerId = null;
-
-    state.viewLastStartedAt = null;
-
-    document.removeEventListener(
-        "visibilitychange",
-        handleViewVisibilityChange
-    );
-
-    window.removeEventListener(
-        "pagehide",
-        pauseViewTimer
-    );
-
-    window.removeEventListener(
-        "pageshow",
-        handlePageShow
-    );
 }
 async function initialize() {
     initializeMobileMenu();
@@ -2730,7 +2449,8 @@ async function initialize() {
             state.currentPoem
         );
 
-        initializeViewTracking();
+        incrementCurrentPoemView();
+
         window.SakalisDetailState =
             state;
 
