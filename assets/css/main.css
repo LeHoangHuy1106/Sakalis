@@ -362,42 +362,63 @@ blockquote {
    ========================================================= */
 
 .header-brand {
-    display: inline-flex;
-    flex-direction: column;
+    display: flex;
     align-items: center;
-    justify-self: center;
+    gap: 12px;
 
-    min-width: 0;
-
-    line-height: 1;
-}
-
-.header-brand-feather {
-    margin-bottom: 3px;
-
-    font-family: var(--font-display);
-    font-size: 23px;
-    line-height: 1;
+    text-decoration: none;
+    color: inherit;
 }
 
 .header-brand-icon {
-    width: 25px;
-    height: 25px;
-    margin-bottom: 4px;
+    width: 70px;
+    height: 70px;
 
-    object-fit: contain;
+    object-fit: cover;
+    border-radius: 10px;
+
+    flex-shrink: 0;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
+@media (max-width: 767px) {
+    .header-brand-icon {
+        width: 30px;
+        height: 30px;
 
+        border-radius: 8px;
+    }
+}
 .header-brand-name {
-    font-family: var(--font-display);
-    font-size: 21px;
-    font-weight: 600;
-    line-height: 1;
-    letter-spacing: 0.22em;
-    text-indent: 0.22em;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+}
+.hero-signature-logo {
+    display: block;
+
+    width: 180px;
+    height: 180px;
+
+    margin: 40px auto 0;
+
+    object-fit: cover;
+    border-radius: 32px;
+
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
 }
 
+@media (max-width: 767px) {
+    .hero-signature-logo {
+        width: 60px;
+        height: 60px;
 
+        border-radius: 14px;
+
+        margin-top: 18px;
+    }
+}
 /* =========================================================
    9. DESKTOP NAVIGATION
    ========================================================= */
@@ -648,6 +669,15 @@ blockquote {
     z-index: 2;
 
     width: min(100%, 760px);
+
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
 }
 
 .hero-title {
