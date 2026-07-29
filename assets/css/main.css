@@ -97,6 +97,7 @@ body {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.5;
+      padding-top: 72px;
 }
 
 body.menu-open {
@@ -237,22 +238,21 @@ blockquote {
 /* =========================================================
    5. TOP HEADER
    ========================================================= */
-
 .top-header {
-    position: absolute;
+    position: fixed;
     top: 0;
-    right: 0;
     left: 0;
-    z-index: 60;
+    right: 0;
 
-    height: var(--mobile-header-height);
+    width: 100%;
+    z-index: 1000;
 
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(255, 255, 255, 0.98),
-            rgba(255, 255, 255, 0)
-        );
+    background: rgba(255, 255, 255, 0.96);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .top-header-inner {
@@ -1431,7 +1431,9 @@ blockquote {
     .section-view-all {
         font-size: 16px;
     }
-
+    body {
+            padding-top: 60px;
+        }
     .collection-card {
         grid-template-columns: 45% 55%;
 
@@ -1452,7 +1454,15 @@ blockquote {
 .collection-card {
     font-family: Arial, Helvetica, sans-serif;
 }
-
+@media (min-width: 768px) {
+    .top-header {
+        position: fixed;
+    }
+}
+.main {
+    overflow-y: auto;
+    height: 100vh;
+}
 .collection-card [data-field="title"] {
     font-size: 23px;
     font-weight: 600;

@@ -236,7 +236,7 @@ document.addEventListener(
             .sakalis-music-button {
                 position: fixed;
                 right: 22px;
-                bottom: 22px;
+                bottom: 100px;
                 z-index: 9999;
 
                 width: 52px;
@@ -325,11 +325,11 @@ document.addEventListener(
             @media (max-width: 640px) {
                 .sakalis-music-button {
                     right: 16px;
-                    bottom: 16px;
+                    bottom: 100px;
 
                     width: 46px;
                     height: 46px;
-                }
+                            }
 
                 .sakalis-music-icon {
                     font-size: 22px;
