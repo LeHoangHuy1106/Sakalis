@@ -6,6 +6,9 @@
 import {
     assignRandomImage
 } from "./image-manager.js";
+import { initializeFlipbookReader } from "./detail-flipbook.js";
+
+let flipbookReader = null;
 
 
 /* =========================================================
@@ -1125,6 +1128,8 @@ assignRandomImage(
     renderTopics(poem);
 
     renderPoemContent(poem.content);
+
+    flipbookReader?.setPoem(poem);
 
     renderBookmarkState();
 
@@ -2391,6 +2396,7 @@ async function initialize() {
     initializeMobileMenu();
 
     initializeEvents();
+    flipbookReader = initializeFlipbookReader();
 
     loadBookmarks();
 
