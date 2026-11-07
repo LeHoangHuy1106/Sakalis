@@ -1,30 +1,33 @@
-SAKALIS - NÂNG CẤP TRANG DETAIL: ĐỌC LẬT TRANG 3D
-===================================================
+SAKALIS - DETAIL / FLIPBOOK 3D - BẢN CẬP NHẬT v2
+================================================
 
-ĐÃ THÊM
-- Chuyển giữa "Đọc thường" (giao diện cũ) và "Lật trang 3D".
-- Giữ nguyên bài thơ lấy từ Google Sheets, không phải sửa dữ liệu.
-- Tự ngắt nội dung thành các trang dựa trên kích thước màn hình.
-- PC/tablet ngang: dạng sách mở hai trang; điện thoại: một trang.
-- Lật bằng cách kéo/chạm mép giấy, nút Trước/Sau, phím trái/phải.
-- Thanh chọn trang, bìa sách và trang kết thúc.
-- Ghi nhớ chế độ đọc được chọn bằng localStorage (nếu có quyền).
-- Có hiệu ứng 3D CSS và bóng đổ; không phụ thuộc CDN/plugin ngoài.
+CHỈNH SỬA v2
+- GIỮ NGUYÊN bìa và trang kết thúc của bản trước.
+- Thay cách xoay mặt phẳng 180 độ bằng trang giấy cong (24 dải 3D
+  liên tục, có mặt trước/mặt sau, ánh sáng và bóng theo góc uốn).
+- Lật bằng kéo góc giấy/chạm, nút Trước/Sau hoặc phím mũi tên.
+- Nút "Toàn màn hình" trong thanh trên của chế độ flipbook.
+  Có fallback toàn màn hình dạng overlay khi trình duyệt không hỗ trợ API.
+- Thơ chia tối đa 10 dòng/trang. Nếu chiều cao màn hình quá ngắn
+  sẽ chia ít dòng hơn, tránh cắt mất nội dung.
+- Một dòng thơ từ Google Sheets luôn nằm trên một dòng giấy;
+  tự điều chỉnh cỡ chữ và độ nén ngang với dòng quá dài.
+- TẮT TỰ ĐỘNG PHÁT NHẠC: nhạc chỉ chạy khi người đọc bấm nút ♫.
+- Giữ nguyên chế độ đọc thường, thanh chọn trang, tập dữ liệu Google
+  Sheets và giao diện các trang còn lại.
 
-FILE ĐÃ SỬA
+FILE CHỈNH SỬA
 - detail.html
-- assets/js/detail.js
-
-FILE MỚI
-- assets/js/detail-flipbook.js
 - assets/css/detail-flipbook.css
+- assets/js/detail-flipbook.js
+- assets/js/detail-music.js
 
 TRIỂN KHAI
-Upload toàn bộ thư mục như website cũ. Phục vụ qua HTTP(S)
-(ví dụ GitHub Pages), không mở trang trực tiếp kiểu file://,
-vì trang dùng JavaScript ES modules.
+Đưa toàn bộ nội dung file ZIP lên hosting tĩnh HTTP(S),
+chẳng hạn GitHub Pages. Không mở detail.html bằng file://
+vì website dùng ES modules và dữ liệu từ Google Sheets.
 
-LƯU Ý
-Hiệu ứng sử dụng CSS 3D cho tờ giấy, không phải bộ giả lập
-uốn cong nhiều đoạn giấy chuyên dụng như FlipHTML5.
-Trang sách được tạo từ nội dung bài thơ đang xem, không phải PDF.
+LƯU Ý KỸ THUẬT
+Giấy được uốn bởi mesh CSS 3D nhiều dải, không phải thư viện
+FlipHTML5. Giao diện căn theo desktop/mobile, nhưng hiệu ứng 3D
+có thể khác nhau tùy trình duyệt/GPU. Trình phát nhạc không có autoplay.

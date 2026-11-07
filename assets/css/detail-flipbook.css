@@ -60,7 +60,7 @@
 .flipbook-reader:focus-visible { outline: 2px solid #b3a17e; outline-offset: 3px; }
 .poem-detail-layout[hidden],
 .flipbook-reader[hidden],
-.flipbook-leaf[hidden],
+.flipbook-curl-layer[hidden],
 .flipbook-static[hidden] { display: none !important; }
 
 /* Khung lật trang */
@@ -82,7 +82,7 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    gap: 20px;
+    gap: 13px;
     padding: 0 7px 13px;
     border-bottom: 1px solid rgba(255,255,255,.12);
 }
@@ -93,7 +93,10 @@
     color: #d6d2c8;
 }
 .flipbook-reader-name {
-    max-width: 50%;
+    flex: 1;
+    min-width: 0;
+    max-width: none;
+    text-align: right;
     color: #c5c1b6;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -101,6 +104,26 @@
     font-family: var(--font-display, Georgia, serif);
     font-size: 16px;
 }
+.flipbook-fullscreen {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 35px;
+    padding: 0 11px;
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 7px;
+    color: #eeeae2;
+    background: rgba(255,255,255,.045);
+    font-size: 11px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.flipbook-fullscreen:hover, .flipbook-fullscreen.is-active { background: rgba(255,255,255,.15); }
+.flipbook-fullscreen svg { width: 16px; height: 16px; }
+.flipbook-fullscreen:focus-visible { outline: 2px solid #b3a17e; outline-offset: 3px; }
+
 .flipbook-stage {
     position: relative;
     display: flex;
@@ -119,9 +142,7 @@
     flex: none;
     max-width: 100%;
     transform-style: preserve-3d;
-    isolation: isolate;
     cursor: grab;
-    filter: drop-shadow(0 13px 16px rgba(0,0,0,.28));
 }
 .flipbook-book:active { cursor: grabbing; }
 .flipbook-static {
@@ -132,7 +153,7 @@
     height: 100%;
     overflow: hidden;
     background: #fffdfa;
-    box-shadow: 0 0 2px rgba(0,0,0,.06);
+    box-shadow: 0 12px 17px rgba(0,0,0,.22), 0 0 2px rgba(0,0,0,.06);
 }
 .flipbook-static-left { border-radius: 4px 0 0 4px; }
 .flipbook-static-right {
@@ -155,45 +176,50 @@
 .flipbook-is-single .flipbook-static-right { left: 0; width: 100%; }
 .flipbook-is-single .flipbook-static-right::after { display: none; }
 
-/* Mặt trước và mặt sau của tờ giấy đang được lật. */
-.flipbook-leaf {
-    --flipbook-curl: 0;
+/* Tờ giấy uốn cong: một mặt cong 3D ghép từ 24 dải mỏng liên tục. */
+.flipbook-curl-layer {
     position: absolute;
-    z-index: 5;
+    z-index: 9;
     top: 0;
     left: 50%;
-    width: 50%;
     height: 100%;
-    transform: rotateY(0deg);
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    pointer-events: none;
+    will-change: transform;
+}
+.flipbook-curl-strip {
+    position: absolute;
+    top: 0;
+    left: 0;
     transform-origin: left center;
     transform-style: preserve-3d;
     will-change: transform;
-    pointer-events: none;
 }
-.flipbook-is-single .flipbook-leaf { left: 0; width: 100%; }
-.flipbook-leaf-face {
+.flipbook-strip-front, .flipbook-strip-back {
     position: absolute;
-    inset: 0;
+    inset: 0 auto 0 0;
+    height: 100%;
     overflow: hidden;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    background-color: #fefdf8;
-    border-radius: 0 4px 4px 0;
-    box-shadow: 2px 0 3px rgba(39,30,20,.1);
+    background: #fffdf9;
 }
-.flipbook-leaf-front::after,
-.flipbook-leaf-back::after {
+.flipbook-strip-back {
+    transform: rotateY(180deg);
+    transform-origin: center center;
+}
+.flipbook-strip-front::after, .flipbook-strip-back::after {
     position: absolute;
-    z-index: 3;
+    z-index: 4;
     inset: 0;
-    background: linear-gradient(90deg, rgba(45,36,24,.17), transparent 21%, rgba(255,255,255,.3) 53%, rgba(45,36,24,.19));
-    opacity: calc(.22 + var(--flipbook-curl) * .65);
     pointer-events: none;
     content: "";
+    opacity: var(--flipbook-strip-shade, .2);
+    background: linear-gradient(90deg, rgba(255,255,255,.35), rgba(72,52,32,.47));
 }
-.flipbook-leaf-back { transform: rotateY(180deg); border-radius: 4px 0 0 4px; }
-.flipbook-leaf-back::after {
-    background: linear-gradient(90deg, rgba(50,38,26,.2), rgba(255,255,255,.33) 52%, rgba(50,38,26,.2));
+.flipbook-strip-back::after {
+    background: linear-gradient(90deg, rgba(72,52,32,.44), rgba(255,255,255,.38));
 }
 
 /* Giấy và typography: tất cả các trang dùng cùng kích cỡ. */
@@ -251,9 +277,15 @@
     font-size: var(--flipbook-font-size);
     line-height: 1.78;
     font-weight: 400;
-    overflow-wrap: anywhere;
+    overflow-wrap: normal;
 }
-.flipbook-line { display: block; white-space: pre-wrap; }
+.flipbook-line {
+    display: block;
+    width: max-content;
+    max-width: none;
+    white-space: pre;
+    transform-origin: left center;
+}
 .flipbook-stanza-start { margin-top: 1.15em; }
 .flipbook-page-footer { height: 26px; border-top: 1px solid #d8d0c4; }
 .flipbook-measure {
@@ -400,4 +432,43 @@
 }
 @media (prefers-reduced-motion: reduce) {
     .detail-reading-option, .flipbook-nav-button { transition: none; }
+}
+
+/* Fullscreen API + fallback cho trình duyệt iOS không hỗ trợ fullscreen section. */
+html.sakalis-flipbook-fullscreen { overflow: hidden !important; }
+.flipbook-reader:fullscreen, .flipbook-reader:-webkit-full-screen,
+.flipbook-reader.is-fullscreen-fallback {
+    box-sizing: border-box;
+    display: flex !important;
+    flex-direction: column;
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    margin: 0;
+    padding: max(12px, env(safe-area-inset-top)) max(13px, env(safe-area-inset-right)) max(15px, env(safe-area-inset-bottom)) max(13px, env(safe-area-inset-left));
+    border-radius: 0;
+    overflow: auto;
+    background: radial-gradient(ellipse at 50% 27%, #55575a, #2a2c2e 70%);
+}
+.flipbook-reader.is-fullscreen-fallback { position: fixed; z-index: 99999; inset: 0; }
+.flipbook-reader:fullscreen .flipbook-stage,
+.flipbook-reader:-webkit-full-screen .flipbook-stage,
+.flipbook-reader.is-fullscreen-fallback .flipbook-stage {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 8px 0;
+}
+.flipbook-reader:fullscreen .flipbook-reader-intro,
+.flipbook-reader.is-fullscreen-fallback .flipbook-reader-intro { flex: 0 0 auto; }
+.flipbook-reader:fullscreen .flipbook-navigation,
+.flipbook-reader.is-fullscreen-fallback .flipbook-navigation { width: min(100%, 880px); flex: none; }
+.flipbook-reader:fullscreen .flipbook-seek-wrap,
+.flipbook-reader.is-fullscreen-fallback .flipbook-seek-wrap { width: min(100%, 880px); flex: none; }
+.flipbook-reader:fullscreen .flipbook-reader-hint,
+.flipbook-reader.is-fullscreen-fallback .flipbook-reader-hint { flex: none; }
+@media (max-width: 700px) {
+    .flipbook-fullscreen { padding: 0 8px; gap: 5px; min-height: 33px; font-size: 10px; }
+    .flipbook-fullscreen svg { width: 15px; height: 15px; }
+    .flipbook-reader:fullscreen .flipbook-reader-intro,
+    .flipbook-reader.is-fullscreen-fallback .flipbook-reader-intro { padding: 0 0 9px; }
 }

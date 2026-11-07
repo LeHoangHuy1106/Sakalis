@@ -42,7 +42,6 @@
     injectStyles();
     createMusicButton();
     bindAudioEvents();
-  audio.play().catch(() => {});
 
     function createMusicButton() {
         const button = document.createElement("button");
@@ -73,14 +72,6 @@
 
         updateButton();
     }
-document.addEventListener(
-    "pointerdown",
-    () => {
-        audio.play().catch(() => {});
-    },
-    { once: true }
-);
-
     async function toggleMusic() {
         if (audio.paused) {
             try {

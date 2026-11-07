@@ -5,7 +5,9 @@
    ========================================================= */
 
 const READING_MODE_KEY = "sakalis-detail-reading-mode";
-const ANIMATION_MS = 660;
+const ANIMATION_MS = 880;
+const LINES_PER_PAGE = 10;
+const CURL_SEGMENTS = 24;
 const REDUCED_MOTION = window.matchMedia?.("(prefers-reduced-motion: reduce)");
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
@@ -43,6 +45,7 @@ function makePoemLines(content) {
 function makeLineNode(line, firstOnPage = false) {
     const el = createElement("span", "flipbook-line", line.text || "\u00a0");
     if (line.stanzaStart && !firstOnPage) el.classList.add("flipbook-stanza-start");
+    if (line.fit && line.fit < 0.999) el.style.transform = `scaleX(${line.fit})`;
     return el;
 }
 
@@ -95,10 +98,11 @@ function createPage(page, number, total, poem) {
 }
 
 /**
- * Tạo trang dựa trên kích thước giấy THỰC TẾ, không cắt mất câu thơ.
- * Dùng một trang ẩn cùng CSS để đo phần body và thêm từng câu theo thứ tự.
+ * Mỗi dòng gốc của tác giả phải nằm TRÊN MỘT DÒNG GIẤY.
+ * Nhóm 10 dòng mỗi trang, giữ dấu ngắt khổ và điều chỉnh cỡ chữ/độ rộng chữ
+ * theo diện tích trang thực tế. Không tự cắt một câu xuống hàng tiếp theo.
  */
-function paginatePoem(stage, lines, width, height, poem) {
+function paginatePoem(stage, lines, width, height, poem, baseFontSize) {
     const measurePage = createPage({ type: "poem", lines: [] }, 1, 1, poem);
     measurePage.classList.add("flipbook-measure");
     measurePage.style.width = `${width}px`;
@@ -106,28 +110,51 @@ function paginatePoem(stage, lines, width, height, poem) {
     stage.append(measurePage);
     const body = measurePage.querySelector(".flipbook-page-body");
     const text = measurePage.querySelector(".flipbook-poem-text");
-    // clientHeight tính cả padding; phải trừ padding để không che dòng cuối.
+    const availableWidth = Math.max(120, body.clientWidth);
     const bodyStyle = getComputedStyle(body);
-    const availableHeight = body.clientHeight
-        - parseFloat(bodyStyle.paddingTop || 0)
-        - parseFloat(bodyStyle.paddingBottom || 0);
+    const availableHeight = Math.max(120, body.clientHeight -
+        parseFloat(bodyStyle.paddingTop || 0) - parseFloat(bodyStyle.paddingBottom || 0));
+    const family = getComputedStyle(text).fontFamily;
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+    const measured = (fontSize) => {
+        if (!context) return [];
+        context.font = `400 ${fontSize}px ${family}`;
+        return lines.map((line) => context.measureText(line.text || " ").width);
+    };
+    const samples = measured(baseFontSize).sort((a, b) => a - b);
+    const typicalLongest = samples[Math.min(samples.length - 1, Math.floor(samples.length * .90))] || 1;
+    // Ưu tiên kích thước dễ đọc, chỉ nén ngang những dòng dài bất thường.
+    let fontSize = Math.min(baseFontSize, baseFontSize * (availableWidth - 5) / Math.max(1, typicalLongest));
+    fontSize = Math.max(width < 330 ? 11.1 : 12.0, fontSize);
+    // Nếu màn hình rất thấp, vòng phân trang bên dưới tự giảm số dòng.
+    // Giữ cỡ chữ ở mức dễ đọc thay vì ép 10 dòng bằng mọi giá.
+    stage.closest(".flipbook-reader")?.style.setProperty("--flipbook-font-size", `${fontSize.toFixed(2)}px`);
+    const widths = measured(fontSize);
+    const prepared = lines.map((line, i) => ({
+        ...line,
+        fit: widths[i] > availableWidth - 3 ? (availableWidth - 3) / widths[i] : 1
+    }));
     const pages = [];
     let current = [];
-
-    for (const line of lines) {
+    for (const line of prepared) {
+        if (current.length >= LINES_PER_PAGE) {
+            pages.push({ type: "poem", lines: current });
+            current = [];
+            text.replaceChildren();
+        }
         const node = makeLineNode(line, current.length === 0);
         text.append(node);
         if (current.length > 0 && text.scrollHeight > availableHeight + 1) {
             node.remove();
             pages.push({ type: "poem", lines: current });
-            text.replaceChildren();
             current = [];
+            text.replaceChildren();
             text.append(makeLineNode(line, true));
         }
         current.push(line);
     }
-
-    if (current.length > 0) pages.push({ type: "poem", lines: current });
+    if (current.length) pages.push({ type: "poem", lines: current });
     measurePage.remove();
     return pages.length ? pages : [{ type: "poem", lines: [] }];
 }
@@ -138,9 +165,8 @@ export function initializeFlipbookReader() {
     const book = document.querySelector("#flipbook-book");
     const left = document.querySelector("#flipbook-left");
     const right = document.querySelector("#flipbook-right");
-    const leaf = document.querySelector("#flipbook-leaf");
-    const leafFront = document.querySelector("#flipbook-leaf-front");
-    const leafBack = document.querySelector("#flipbook-leaf-back");
+    const curlLayer = document.querySelector("#flipbook-curl-layer");
+    const fullscreenButton = document.querySelector("#flipbook-fullscreen");
     const backButton = document.querySelector("#flipbook-previous");
     const nextButton = document.querySelector("#flipbook-next");
     const seek = document.querySelector("#flipbook-seek");
@@ -148,7 +174,7 @@ export function initializeFlipbookReader() {
     const nameLabel = document.querySelector("#flipbook-reader-name");
     const oldLayout = document.querySelector("#poem-detail-layout");
     const modeButtons = Array.from(document.querySelectorAll("[data-reader-mode]"));
-    if (!reader || !stage || !book || !oldLayout || !leaf || !seek) {
+    if (!reader || !stage || !book || !oldLayout || !curlLayer || !seek) {
         return { setPoem() {} };
     }
 
@@ -167,8 +193,10 @@ export function initializeFlipbookReader() {
         height: 586,
         busy: false,
         pointer: null,
-        animationTimer: null,
-        resizeTimer: null
+        animationFrame: null,
+        animationToken: 0,
+        resizeTimer: null,
+        dragCorner: 1
     };
 
     const maxSpread = () => state.single
@@ -220,19 +248,19 @@ export function initializeFlipbookReader() {
             paint(left, state.spread === 0 ? null : state.spread * 2 - 1);
             paint(right, state.spread * 2);
         }
-        leaf.hidden = true;
-        leaf.style.transition = "none";
+        curlLayer.hidden = true;
         updateNavigation();
     }
 
     function clearFlip() {
-        if (state.animationTimer) clearTimeout(state.animationTimer);
-        state.animationTimer = null;
+        state.animationToken += 1;
+        if (state.animationFrame !== null) cancelAnimationFrame(state.animationFrame);
+        state.animationFrame = null;
         state.pointer = null;
         state.busy = false;
-        leaf.hidden = true;
-        leaf.style.transition = "none";
-        leaf.style.transform = "rotateY(0deg)";
+        curlLayer.hidden = true;
+        curlLayer.replaceChildren();
+        curlLayer.style.transform = "none";
     }
 
     function rebuild(preserve = false) {
@@ -242,16 +270,20 @@ export function initializeFlipbookReader() {
         clearFlip();
 
         const available = Math.max(245, stage.clientWidth);
+        const isFullscreen = document.fullscreenElement === reader || reader.classList.contains("is-fullscreen-fallback");
         state.single = available < 710;
-        state.width = Math.min(432, Math.floor((available - (state.single ? 8 : 28)) / (state.single ? 1 : 2)));
-        state.width = Math.max(230, state.width);
+        const maxWidth = isFullscreen ? 600 : 432;
+        const widthForStage = Math.floor((available - (state.single ? 8 : 28)) / (state.single ? 1 : 2));
+        const heightForStage = isFullscreen ? Math.max(250, stage.clientHeight - 30) : Infinity;
+        state.width = Math.max(215, Math.min(maxWidth, widthForStage, Math.floor(heightForStage / 1.40)));
         state.height = Math.round(state.width * 1.40);
-        reader.style.setProperty("--flipbook-font-size", `${state.width < 330 ? 13.7 : state.width < 380 ? 14.8 : 16.2}px`);
+        const baseFont = state.width < 330 ? 13.7 : state.width < 380 ? 14.8 : 16.2;
+        reader.style.setProperty("--flipbook-font-size", `${baseFont}px`);
         reader.style.setProperty("--flipbook-page-width", `${state.width}px`);
         reader.style.setProperty("--flipbook-page-height", `${state.height}px`);
 
         const lines = makePoemLines(state.poem.content);
-        const contentPages = paginatePoem(stage, lines, state.width, state.height, state.poem);
+        const contentPages = paginatePoem(stage, lines, state.width, state.height, state.poem, baseFont);
         state.pages = [{ type: "cover" }, ...contentPages, { type: "end" }];
         const scaledIndex = preserve && previousTotal > 1
             ? Math.round((previousIndex / (previousTotal - 1)) * (state.pages.length - 1))
@@ -261,60 +293,133 @@ export function initializeFlipbookReader() {
         draw();
     }
 
+    /**
+     * Một trang giấy = 24 dải 3D liền nhau. Góc của từng dải thay đổi
+     * theo vị trí trên tờ giấy, vì vậy toàn trang tạo thành một mặt cong
+     * (không phải một tấm phẳng rotateY 180°).
+     * Mặt sau được đảo đối xứng để chữ vẫn đọc xuôi sau khi lật.
+     */
+    function createCurlSurface(page, pageIndex, back, start, pieceWidth) {
+        const face = createElement("div", back ? "flipbook-strip-back" : "flipbook-strip-front");
+        face.style.width = `${pieceWidth + 1.5}px`;
+        const paper = page ? createPage(page, pageIndex + 1, state.pages.length, state.poem)
+            : createElement("div", "flipbook-empty-paper");
+        paper.style.width = `${state.width}px`;
+        paper.style.height = `${state.height}px`;
+        paper.style.position = "absolute";
+        paper.style.left = `${-start}px`;
+        paper.style.top = "0";
+        if (back) paper.style.transform = "scaleX(-1)";
+        face.append(paper);
+        return face;
+    }
+
+    function prepareCurl(frontIndex, backIndex) {
+        curlLayer.replaceChildren();
+        curlLayer.style.left = `${state.single ? 0 : state.width}px`;
+        curlLayer.style.width = `${state.width}px`;
+        curlLayer.style.height = `${state.height}px`;
+        const pieceWidth = state.width / CURL_SEGMENTS;
+        const strips = [];
+        for (let i = 0; i < CURL_SEGMENTS; i += 1) {
+            const start = i * pieceWidth;
+            const strip = createElement("div", "flipbook-curl-strip");
+            strip.style.width = `${pieceWidth + 1.5}px`;
+            strip.style.height = `${state.height}px`;
+            strip.append(
+                createCurlSurface(pageAt(frontIndex), frontIndex, false, start, pieceWidth),
+                createCurlSurface(pageAt(backIndex), backIndex, true, start, pieceWidth)
+            );
+            curlLayer.append(strip);
+            strips.push(strip);
+        }
+        curlLayer.hidden = false;
+        return strips;
+    }
+
+    let strips = [];
+    function renderCurl(turn) {
+        const t = clamp(turn, 0, 1);
+        const pieceWidth = state.width / CURL_SEGMENTS;
+        const baseAngle = Math.PI * t;
+        const bend = .99 * Math.sin(Math.PI * t);
+        let x = 0;
+        let z = 0;
+        for (let i = 0; i < strips.length; i += 1) {
+            // Góc riêng từng dải, tích phân vị trí để các dải nối nhau.
+            const s = (i + .5) / CURL_SEGMENTS;
+            const theta = baseAngle - bend * Math.sin(Math.PI * s);
+            const strip = strips[i];
+            strip.style.transform = `translate3d(${x.toFixed(3)}px,0,${z.toFixed(3)}px) rotateY(${(-theta).toFixed(5)}rad)`;
+            strip.style.setProperty("--flipbook-strip-shade", `${Math.min(.83, Math.abs(Math.sin(theta)) * .49 + Math.sin(Math.PI * t) * .19).toFixed(3)}`);
+            x += pieceWidth * Math.cos(theta);
+            z += pieceWidth * Math.sin(theta);
+        }
+        const skew = state.dragCorner * -7 * Math.sin(Math.PI * t);
+        curlLayer.style.transform = `skewY(${skew.toFixed(2)}deg)`;
+        curlLayer.style.setProperty("--flipbook-fold-shadow", `${(.17 + .30 * Math.sin(Math.PI * t)).toFixed(2)}`);
+    }
+
     function prepareFlip(direction) {
         if (state.busy || !state.pages.length) return false;
         const target = state.spread + direction;
         if (target < 0 || target > maxSpread()) return false;
         state.busy = true;
-
+        let frontIndex;
+        let backIndex;
         if (state.single) {
-            // Bìa phía trước lật đi, trang sau nằm ở dưới.
             paint(right, direction > 0 ? target : state.spread);
-            paint(leafFront, direction > 0 ? state.spread : target);
-            paint(leafBack, null);
+            frontIndex = direction > 0 ? state.spread : target;
+            backIndex = null; // Mặt sau là trang trắng như một tờ giấy lẻ.
         } else if (direction > 0) {
-            // Bên phải trang hiện tại = mặt trước; bên trái tiếp theo = mặt sau.
             paint(left, state.spread === 0 ? null : state.spread * 2 - 1);
             paint(right, target * 2);
-            paint(leafFront, state.spread * 2);
-            paint(leafBack, target * 2 - 1);
+            frontIndex = state.spread * 2;
+            backIndex = target * 2 - 1;
         } else {
-            // Đi ngược: trả tờ giấy bên trái về phía phải.
             paint(left, target === 0 ? null : target * 2 - 1);
             paint(right, state.spread * 2);
-            paint(leafFront, target * 2);
-            paint(leafBack, state.spread * 2 - 1);
+            frontIndex = target * 2;
+            backIndex = state.spread * 2 - 1;
         }
-        leaf.hidden = false;
-        leaf.style.transition = "none";
+        strips = prepareCurl(frontIndex, backIndex);
         setProgress(direction, 0);
         updateNavigation();
         return true;
     }
 
     function setProgress(direction, progress) {
-        const p = clamp(progress, 0, 1);
-        const degrees = direction > 0 ? -180 * p : -180 * (1 - p);
-        leaf.style.transform = `rotateY(${degrees}deg)`;
-        leaf.style.setProperty("--flipbook-curl", String(Math.sin(Math.PI * (direction > 0 ? p : 1 - p))));
+        renderCurl(direction > 0 ? progress : 1 - progress);
     }
 
     function settle(direction, complete, fromProgress = 0) {
-        const distance = complete ? 1 - fromProgress : fromProgress;
-        const ms = REDUCED_MOTION?.matches ? 0 : Math.max(140, ANIMATION_MS * distance);
-        leaf.style.transition = `transform ${ms}ms cubic-bezier(.22,.65,.2,1)`;
-        // Start next frame so drag position is committed before animation begins.
-        requestAnimationFrame(() => setProgress(direction, complete ? 1 : 0));
-        state.animationTimer = setTimeout(() => {
-            if (complete) state.spread = clamp(state.spread + direction, 0, maxSpread());
-            clearFlip();
-            draw();
-        }, ms + 45);
+        const startProgress = clamp(fromProgress, 0, 1);
+        const targetProgress = complete ? 1 : 0;
+        const distance = Math.abs(targetProgress - startProgress);
+        const duration = REDUCED_MOTION?.matches ? 0 : Math.max(120, ANIMATION_MS * distance);
+        const token = ++state.animationToken;
+        let startTime = null;
+        const animate = (time) => {
+            if (token !== state.animationToken) return;
+            if (startTime === null) startTime = time;
+            const t = duration ? clamp((time - startTime) / duration, 0, 1) : 1;
+            // Ease-in-out quintic: tăng tốc nhẹ, giảm tốc mềm khi giấy đáp xuống.
+            const eased = t < .5 ? 16 * t ** 5 : 1 - (-2 * t + 2) ** 5 / 2;
+            setProgress(direction, startProgress + (targetProgress - startProgress) * eased);
+            if (t < 1) {
+                state.animationFrame = requestAnimationFrame(animate);
+            } else {
+                if (complete) state.spread = clamp(state.spread + direction, 0, maxSpread());
+                clearFlip();
+                draw();
+            }
+        };
+        state.animationFrame = requestAnimationFrame(animate);
     }
 
     function flip(direction) {
         if (!prepareFlip(direction)) return;
-        requestAnimationFrame(() => settle(direction, true, 0));
+        settle(direction, true, 0);
     }
 
     function goToPage(pageOneBased) {
@@ -341,6 +446,8 @@ export function initializeFlipbookReader() {
             requestAnimationFrame(() => rebuild(false));
         } else {
             clearFlip();
+            if (reader.classList.contains("is-fullscreen-fallback")) exitFallbackFullscreen();
+            if (document.fullscreenElement === reader) document.exitFullscreen().catch(() => {});
         }
     }
 
@@ -358,6 +465,7 @@ export function initializeFlipbookReader() {
         const edge = Math.max(65, state.width * 0.34);
         const direction = pos.x >= bookWidth - edge ? 1 : pos.x <= edge ? -1 : 0;
         if (direction === 0 || !prepareFlip(direction)) return;
+        state.dragCorner = pos.y < state.height / 2 ? -1 : 1;
         state.pointer = {
             id: event.pointerId,
             startX: event.clientX,
@@ -390,6 +498,52 @@ export function initializeFlipbookReader() {
         settle(drag.direction, complete, drag.progress);
     }
 
+    function isFullscreen() {
+        return document.fullscreenElement === reader || reader.classList.contains("is-fullscreen-fallback");
+    }
+
+    function updateFullscreenButton() {
+        if (!fullscreenButton) return;
+        const active = isFullscreen();
+        fullscreenButton.classList.toggle("is-active", active);
+        fullscreenButton.setAttribute("aria-label", active ? "Thoát toàn màn hình" : "Mở toàn màn hình");
+        fullscreenButton.setAttribute("aria-pressed", String(active));
+        const label = fullscreenButton.querySelector(".flipbook-fullscreen-label");
+        if (label) label.textContent = active ? "Thu nhỏ" : "Toàn màn hình";
+    }
+
+    function exitFallbackFullscreen() {
+        reader.classList.remove("is-fullscreen-fallback");
+        document.documentElement.classList.remove("sakalis-flipbook-fullscreen");
+        updateFullscreenButton();
+        if (!reader.hidden) requestAnimationFrame(() => rebuild(true));
+    }
+
+    async function toggleFullscreen() {
+        if (document.fullscreenElement === reader) {
+            try { await document.exitFullscreen(); } catch (error) { console.warn(error); }
+        } else if (reader.classList.contains("is-fullscreen-fallback")) {
+            exitFallbackFullscreen();
+        } else {
+            try {
+                if (!reader.requestFullscreen) throw new Error("Fullscreen API unavailable");
+                await reader.requestFullscreen();
+            } catch (_) {
+                // iOS Safari cũ không hỗ trợ Fullscreen trên thẻ section.
+                reader.classList.add("is-fullscreen-fallback");
+                document.documentElement.classList.add("sakalis-flipbook-fullscreen");
+                updateFullscreenButton();
+                requestAnimationFrame(() => rebuild(true));
+            }
+        }
+    }
+
+    fullscreenButton?.addEventListener("click", toggleFullscreen);
+    document.addEventListener("fullscreenchange", () => {
+        updateFullscreenButton();
+        if (!reader.hidden) requestAnimationFrame(() => rebuild(true));
+    });
+
     for (const button of modeButtons) {
         button.addEventListener("click", () => setMode(button.dataset.readerMode));
     }
@@ -401,6 +555,10 @@ export function initializeFlipbookReader() {
     book.addEventListener("pointerup", (event) => pointerUp(event));
     book.addEventListener("pointercancel", (event) => pointerUp(event, true));
     document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && reader.classList.contains("is-fullscreen-fallback")) {
+            exitFallbackFullscreen();
+            return;
+        }
         if (reader.hidden || event.altKey || event.ctrlKey || event.metaKey) return;
         const tag = document.activeElement?.tagName;
         if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
