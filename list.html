@@ -13,7 +13,11 @@
 
 </head>
 <body data-page="list">
-<div id="app"><noscript>Vui lòng bật JavaScript để đọc thơ trên Sakalis.</noscript></div>
-<script type="module" src="./assets/js/site.js"></script>
+<div id="app"><div class="boot-status" role="status">
+    <span class="boot-mark">✳</span>
+    <p>Đang mở những trang thơ...</p>
+    <noscript>Vui lòng bật JavaScript để đọc thơ trên Sakalis.</noscript>
+  </div></div>
+<script defer src="./assets/js/site.bundle.js?v=3.1.0"></script>
 </body>
 </html>

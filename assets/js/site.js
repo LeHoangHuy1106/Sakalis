@@ -1,7 +1,7 @@
 import {esc,loadPoems,bookmarks,newest,popular,collectionGroups,topicGroups,poemURL,collectionURL,topicURL,photo,excerpt,formatNumber,formatDate,compositionDate,query,toggleBookmark,trackView,youtubeId,slug} from './data.js';
 
 const root=document.querySelector('#app');
-const page=document.body.dataset.page||'home';
+const page=(document.body.dataset.page==='index'?'home':document.body.dataset.page)||'home';
 const params=new URLSearchParams(location.search);
 const icon=(name,size=20)=>{
  const p={search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>',arrow:'<path d="M5 12h14m-6-6 6 6-6 6"/>',north:'<path d="M5 19 19 5M7 5h12v12"/>',bookmark:'<path d="M6 3.7h12v17l-6-4-6 4z"/>',heart:'<path d="M20.8 8.6c0 4.6-8.8 10.3-8.8 10.3S3.2 13.2 3.2 8.6A5.2 5.2 0 0 1 12 5.1a5.2 5.2 0 0 1 8.8 3.5Z"/>',menu:'<path d="M4 7h16M4 12h16M4 17h16"/>',close:'<path d="M5 5 19 19M19 5 5 19"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/>',moon:'<path d="M21 13A9 9 0 0 1 11 3a9 9 0 1 0 10 10Z"/>',share:'<path d="M12 16V3m-5 5 5-5 5 5M5 13v7h14v-7"/>',play:'<path d="m8 5 11 7-11 7z"/>',pause:'<path d="M8 5v14M16 5v14"/>',book:'<path d="M4 5.5c3-1.4 6-1.3 8 0 2-1.3 5-1.4 8 0v14c-3-1.4-6-1.3-8 0-2-1.3-5-1.4-8 0zM12 5.5v14"/>',minus:'<path d="M5 12h14"/>',plus:'<path d="M5 12h14M12 5v14"/>',chev:'<path d="m9 5 7 7-7 7"/>',expand:'<path d="M9 3H3v6m12-6h6v6M3 15v6h6m12-6v6h-6"/>',headphones:'<path d="M3 13v-2a9 9 0 0 1 18 0v2M3 13v6h4v-6H3Zm14 0v6h4v-6h-4Z"/>'};
@@ -99,8 +99,20 @@ async function initDetail(){const wrap=document.querySelector('#detail-content')
  const video=youtubeId(p.youtube);document.querySelector('#youtube-open')?.addEventListener('click',()=>{const box=document.querySelector('#youtube-container');box.hidden=false;box.innerHTML=`<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/${video}?rel=0&autoplay=1" title="${esc(p.title)}" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;document.querySelector('#youtube-open').hidden=true;});
  const music=new Audio('./assets/audio/background.mp3');music.loop=true;music.volume=.32;music.preload='none';const mb=document.querySelector('#music-toggle');mb.addEventListener('click',async()=>{if(music.paused){try{await music.play();}catch{toast('Không thể phát nhạc nền.');}}else music.pause();});const updateMusic=()=>{const playing=!music.paused;mb.classList.toggle('playing',playing);mb.setAttribute('aria-pressed',String(playing));mb.querySelector('span').textContent=playing?'Tắt nhạc':'Nhạc nền';};music.addEventListener('play',updateMusic);music.addEventListener('pause',updateMusic);window.addEventListener('pagehide',()=>music.pause(),{once:true});
  trackView(p.id);registerBookmarks();
- }catch(e){loading.innerHTML=fail(e);}
+ }catch(e){console.error('[Sakalis] Không mở được bài thơ:',e);if(loading.isConnected)loading.innerHTML=fail(e);else{wrap.hidden=false;wrap.innerHTML=fail(e);}}
 }
 function selectRelated(poems,p){const others=poems.filter(q=>String(q.id)!==String(p.id));return [...others].sort((a,b)=>{const score=q=>(p.collection&&q.collection===p.collection?6:0)+q.topics.filter(t=>p.topics.includes(t)).length*3;return score(b)-score(a)||b.timestamp-a.timestamp;}).slice(0,3);}
 
-if(page==='home')home();else if(page==='list')list();else if(page==='collection')collection();else if(page==='detail')detail();
+async function boot(){
+ try {
+  if(page==='home') await home();
+  else if(page==='list') await list();
+  else if(page==='collection') await collection();
+  else if(page==='detail') await detail();
+  else await home();
+ }catch(e){
+  console.error('[Sakalis] Không thể khởi động giao diện:',e);
+  if(root&&!root.querySelector('.site-header'))root.innerHTML='<main class="boot-error"><h1>Không thể mở Sakalis</h1><p>Vui lòng tải lại trang. Nếu lỗi tiếp diễn, hãy kiểm tra trình duyệt và kết nối mạng.</p><button type="button" onclick="location.reload()">Tải lại</button></main>';
+ }
+}
+boot();
