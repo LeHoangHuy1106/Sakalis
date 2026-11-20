@@ -1,10 +1,9 @@
-SAKALIS v3.1 - FIX TRANG TRANG NETLIFY
+SAKALIS v4 / DEPLOY NETLIFY
+=========================
+1. Giải nén ZIP này.
+2. Vào Netlify > Deploys > Deploy manually, kéo nguyên THƯ MỤC chứa index.html, hoặc upload ZIP theo cách Netlify hỗ trợ.
+3. Không upload riêng thư mục assets mà bỏ các file HTML.
+4. Mở site và Ctrl + Shift + R.
+5. Nếu dữ liệu không hiện, kiểm tra Google Sheets CSV đã Publish to web và URL endpoint có truy cập công khai hay không.
 
-1. Giai nen file ZIP.
-2. Upload cac file VA thu muc assets ben trong len Netlify.
-3. index.html phai nam o thu muc goc, KHONG nam trong them 1 thu muc Sakalis con.
-4. Sau khi deploy xong nhan Ctrl+Shift+R hoac mo Incognito de kiem tra.
-5. Mot so trinh duyet chan Google Sheets CORS khi mo file://. Thu bang Netlify/HTTP de xem du lieu that.
-
-Loi da sua: index.html khai bao data-page=index nhung site.js chi nhan home.
-Them: JavaScript classic bundle de khong bi CORS module khi mo file local.
+Bản này đã sửa lỗi index/init của v3 và sử dụng JS bundle thường, tránh lỗi import ES Module từ file://.

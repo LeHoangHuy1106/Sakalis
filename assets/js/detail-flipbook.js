@@ -180,7 +180,7 @@ export function initializeFlipbookReader() {
 
     let storedMode = "scroll";
     try {
-        storedMode = localStorage.getItem(READING_MODE_KEY) === "flip" ? "flip" : "scroll";
+        storedMode = "scroll"; // Không khôi phục flip từ phiên trước: đọc thơ là mặc định.
     } catch (_) { /* Chế độ riêng tư có thể khóa localStorage. */ }
 
     const state = {
