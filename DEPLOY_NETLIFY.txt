@@ -1,9 +1,7 @@
-SAKALIS v4 / DEPLOY NETLIFY
-=========================
-1. Giải nén ZIP này.
-2. Vào Netlify > Deploys > Deploy manually, kéo nguyên THƯ MỤC chứa index.html, hoặc upload ZIP theo cách Netlify hỗ trợ.
-3. Không upload riêng thư mục assets mà bỏ các file HTML.
-4. Mở site và Ctrl + Shift + R.
-5. Nếu dữ liệu không hiện, kiểm tra Google Sheets CSV đã Publish to web và URL endpoint có truy cập công khai hay không.
+SAKALIS v5 — DEPLOY NETLIFY
 
-Bản này đã sửa lỗi index/init của v3 và sử dụng JS bundle thường, tránh lỗi import ES Module từ file://.
+1. Giai nen ZIP.
+2. Upload TOAN BO noi dung thu muc, voi index.html o thu muc goc.
+3. Mo site va bam Ctrl + Shift + R.
+4. API Google Sheets va Apps Script giu nguyen trong assets/js/data.js.
+5. Neu can sua JS, chay python build_bundle.py de tao lai assets/js/site.bundle.js.
