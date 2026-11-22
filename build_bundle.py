@@ -10,6 +10,6 @@ assert n==1,'Cannot find data.js import'
 data=re.sub(r'(?m)^export\s+','',data)
 flip=re.sub(r'(?m)^export\s+','',flip)
 assert 'initializePaperStack()' in site
-out='/* SAKALIS v7 · Vanilla JavaScript / Classic bundle. */\n\'use strict\';\n\n'+data+'\n\n'+flip+'\n\n'+site
+out='/* SAKALIS v7.1 · Vanilla JavaScript / Classic bundle. */\n\'use strict\';\n\n'+data+'\n\n'+flip+'\n\n'+site
 (base/'site.bundle.js').write_text(out,encoding='utf8')
 print('Wrote',base/'site.bundle.js',len(out))
