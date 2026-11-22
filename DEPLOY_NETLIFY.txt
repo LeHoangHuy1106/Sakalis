@@ -1,7 +1,5 @@
-SAKALIS v5 — DEPLOY NETLIFY
-
-1. Giai nen ZIP.
-2. Upload TOAN BO noi dung thu muc, voi index.html o thu muc goc.
-3. Mo site va bam Ctrl + Shift + R.
-4. API Google Sheets va Apps Script giu nguyen trong assets/js/data.js.
-5. Neu can sua JS, chay python build_bundle.py de tao lai assets/js/site.bundle.js.
+SAKALIS v7
+1. Giải nén ZIP.
+2. Deploy toàn bộ nội dung chứa index.html vào Netlify (không cần build).
+3. Ctrl+Shift+R để làm mới cache.
+Local: python -m http.server 8080 rồi mở http://localhost:8080/.

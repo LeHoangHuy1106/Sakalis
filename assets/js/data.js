@@ -4,7 +4,7 @@ export const API = Object.freeze({
   views: 'https://script.google.com/macros/s/AKfycbxhDb3472BOmdCw4AvmPDpCR6bBFl2yCJwdLBCIrVHla9fYb2xnolNeulnY-2cQZQ1qJw/exec'
 });
 const IMAGE_COUNT = 11;
-const CACHE_KEY = 'sakalis-poems-cache-v3';
+const CACHE_KEY = 'sakalis-poems-cache-v6';
 const BOOKMARK_KEY = 'sakalis-bookmarks';
 const norm = v => String(v ?? '').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'');
 export const slug = v => norm(v).replace(/_/g,'-') || 'bai-tho';
@@ -68,7 +68,7 @@ let pending=null;
 export async function loadPoems({force=false}={}){
  if(!force && pending)return pending;
  pending=(async()=>{
-  if(!force)try{const cache=JSON.parse(sessionStorage.getItem(CACHE_KEY)||'null');if(cache && Date.now()-cache.time<180000 && cache.csv){return normalizePoems(parseCSV(cache.csv));}}catch{}
+  if(!force)try{const cache=JSON.parse(sessionStorage.getItem(CACHE_KEY)||'null');if(cache && cache.csv){return normalizePoems(parseCSV(cache.csv));}}catch{}
   const url=new URL(API.csv);url.searchParams.set('cache',String(Date.now()));
   const response=await fetch(url.href,{cache:'no-store'});if(!response.ok)throw Error(`Google Sheets: HTTP ${response.status}`);
   const csv=await response.text();if(!csv.trim()||/^\s*<(html|!doctype)/i.test(csv))throw Error('Nguồn dữ liệu Google Sheets không hợp lệ.');
@@ -79,7 +79,7 @@ export async function loadPoems({force=false}={}){
 export const newest = poems=>[...poems].sort((a,b)=>b.timestamp-a.timestamp||a.sheetIndex-b.sheetIndex);
 export const popular = poems=>[...poems].sort((a,b)=>b.views-a.views||b.timestamp-a.timestamp);
 export const poemURL = p=>`./detail.html?id=${encodeURIComponent(p.id)}&slug=${encodeURIComponent(p.slug)}`;
-export const collectionURL = c=>`./list.html?collection=${encodeURIComponent(c)}`;
+export const collectionURL = c=>`./collection-detail.html?name=${encodeURIComponent(c)}`;
 export const topicURL = t=>`./list.html?topic=${encodeURIComponent(t)}`;
 export const collectionGroups = poems => {
  const groups=new Map();for(const p of poems){if(!p.collection)continue;const k=norm(p.collection);if(!groups.has(k))groups.set(k,{name:p.collection,poems:[]});groups.get(k).poems.push(p);}return [...groups.values()].sort((a,b)=>b.poems.length-a.poems.length);
