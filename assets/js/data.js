@@ -3,7 +3,7 @@ export const API = Object.freeze({
   csv: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSwvAAb6bsHp0cD_DlF5htJ9fSv1sqJ5njXKQPg4K7ICZ08TOZ7voL9dkMLT78W0nnXH5JdHXDi-o_m/pub?output=csv',
   views: 'https://script.google.com/macros/s/AKfycbxhDb3472BOmdCw4AvmPDpCR6bBFl2yCJwdLBCIrVHla9fYb2xnolNeulnY-2cQZQ1qJw/exec'
 });
-const IMAGE_COUNT = 11;
+const IMAGE_COUNT = 13;
 const CACHE_KEY = 'sakalis-poems-cache-v6';
 const BOOKMARK_KEY = 'sakalis-bookmarks';
 const norm = v => String(v ?? '').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'');
@@ -91,7 +91,7 @@ export const photo = (p,index=0)=>{
  const img=String(p?.image??'').trim();
  if(img && /^(https?:\/\/|\.\.?\/|assets\/)/i.test(img) && !/^javascript:/i.test(img))return img;
  const seed=String(p?.id??`${index}`);let hash=0;for(const c of seed)hash=(hash*31+c.charCodeAt(0))|0;
- return `./assets/images/image-${String((Math.abs(hash)%IMAGE_COUNT)+1).padStart(2,'0')}.webp`;
+ return `./assets/images/svg-art/sakalis-${String((Math.abs(hash)%IMAGE_COUNT)+1).padStart(2,'0')}.svg`;
 };
 export const excerpt = (p,limit=150)=>{const text=String(p?.content??'').replace(/\n+/g,' · ').replace(/\s+/g,' ').trim();return text.length>limit?text.slice(0,limit).replace(/\s+\S*$/,'')+'…':text;};
 export const formatNumber = x=>new Intl.NumberFormat('vi-VN').format(Number(x)||0);

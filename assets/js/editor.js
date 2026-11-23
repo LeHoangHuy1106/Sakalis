@@ -85,6 +85,39 @@
       <g stroke="var(--cover-accent)" stroke-linecap="round" stroke-width="3" opacity=".52"><path d="M80 279 48 350M150 294l-31 64M225 275l-33 69M301 295l-34 71M356 263l-31 65M108 393l-32 68M204 384l-32 68M293 393l-32 68"/></g>
       <g stroke="#fff" stroke-linecap="round" opacity=".81" stroke-width="2"><path d="M90 285 58 349M161 290l-31 64M241 269l-32 70M318 300l-32 68M121 398l-32 68"/></g>
       <path d="M0 478Q70 464 137 480T263 480T400 477V540H0Z" fill="var(--cover-accent)" opacity=".38"/>` }
+    ,{ id:'riversong', name:'Dòng sông mực', number:'09', art: `
+      <circle cx="283" cy="142" r="67" fill="#fff" opacity=".44"/>
+      <path d="M-25 350Q48 255 150 292T425 221V560H-25Z" fill="var(--cover-accent)" opacity=".32"/>
+      <path d="M-20 409Q127 319 212 382T421 338V550H-20Z" fill="var(--cover-accent)" opacity=".55"/>
+      <path d="M-23 483Q67 444 161 457T419 421V560H-23Z" fill="var(--cover-accent)" opacity=".81"/>
+      <g fill="none" stroke="#fff" stroke-width="2" opacity=".67"><path d="M100 489Q225 438 373 470"/><path d="M21 510Q177 475 350 506"/><path d="M40 347q54-25 127 11"/></g>
+      <path d="M62 318l19-56 19 56m-14-18h36" stroke="var(--cover-accent)" opacity=".5" fill="none" stroke-width="3"/>` }
+    ,{ id:'lotus', name:'Hoa sen tĩnh lặng', number:'10', art: `
+      <ellipse cx="220" cy="365" rx="180" ry="54" fill="var(--cover-accent)" opacity=".19"/>
+      <g fill="none" stroke="var(--cover-accent)" opacity=".33" stroke-width="2"><ellipse cx="200" cy="396" rx="182" ry="52"/><ellipse cx="200" cy="426" rx="209" ry="69"/><path d="M201 353v171"/></g>
+      <g fill="var(--cover-accent)" opacity=".43"><ellipse cx="201" cy="282" rx="30" ry="96"/><ellipse cx="165" cy="302" rx="27" ry="92" transform="rotate(-31 165 302)"/><ellipse cx="240" cy="302" rx="27" ry="92" transform="rotate(31 240 302)"/><ellipse cx="134" cy="342" rx="24" ry="89" transform="rotate(-55 134 342)"/><ellipse cx="274" cy="342" rx="24" ry="89" transform="rotate(55 274 342)"/></g>
+      <circle cx="316" cy="120" r="64" fill="#fff" opacity=".55"/>
+      <g fill="var(--cover-accent)" opacity=".21"><circle cx="76" cy="96" r="4"/><circle cx="103" cy="66" r="2"/><circle cx="90" cy="163" r="2"/></g>` }
+    ,{ id:'hourglass', name:'Cát thời gian', number:'11', art: `
+      <g stroke="var(--cover-accent)" fill="none" stroke-width="5" opacity=".69"><path d="M118 96h170M118 452h170M137 108q0 110 65 157-65 56-65 180M270 108q0 110-68 157 68 56 68 180"/></g>
+      <path d="M152 164Q198 201 255 164L204 260Z" fill="var(--cover-accent)" opacity=".33"/>
+      <path d="M152 416Q201 350 256 416Z" fill="var(--cover-accent)" opacity=".43"/>
+      <circle cx="204" cy="288" r="4" fill="var(--cover-accent)"/><circle cx="202" cy="320" r="3" fill="var(--cover-accent)"/><circle cx="205" cy="340" r="2" fill="var(--cover-accent)"/>
+      <g stroke="#fff" fill="none" opacity=".65"><circle cx="202" cy="260" r="169" stroke-dasharray="2 11"/><path d="M40 490h320M40 505h320"/></g>` }
+    ,{ id:'windleaf', name:'Lá trong gió', number:'12', art: `
+      <path d="M-30 441Q136 300 428 85" stroke="var(--cover-accent)" fill="none" stroke-width="4" opacity=".67"/>
+      <g fill="var(--cover-accent)" opacity=".42"><ellipse cx="105" cy="337" rx="25" ry="66" transform="rotate(45 105 337)"/><ellipse cx="163" cy="302" rx="27" ry="76" transform="rotate(-38 163 302)"/><ellipse cx="208" cy="258" rx="21" ry="60" transform="rotate(52 208 258)"/><ellipse cx="283" cy="185" rx="26" ry="65" transform="rotate(-32 283 185)"/><ellipse cx="329" cy="130" rx="17" ry="48" transform="rotate(42 329 130)"/></g>
+      <g fill="none" stroke="#fff" stroke-width="1.5" opacity=".58"><path d="M95 390l23-104M154 361l26-116M204 310l20-95M267 236l32-101"/></g>
+      <path d="M36 480Q120 430 206 481T371 480" fill="none" stroke="var(--cover-accent)" stroke-width="2" opacity=".42"/>` }
+    ,{ id:'citylights', name:'Những ô cửa sáng', number:'13', art: `
+      <circle cx="288" cy="106" r="74" fill="#fff" opacity=".28"/>
+      <rect x="33" y="249" width="76" height="290" fill="var(--cover-accent)" opacity=".31"/>
+      <rect x="113" y="171" width="101" height="368" fill="var(--cover-accent)" opacity=".56"/>
+      <rect x="223" y="221" width="65" height="318" fill="var(--cover-accent)" opacity=".43"/>
+      <rect x="295" y="132" width="73" height="408" fill="var(--cover-accent)" opacity=".24"/>
+      <g fill="#fff" opacity=".57"><rect x="51" y="290" width="14" height="26"/><rect x="78" y="341" width="14" height="26"/><rect x="137" y="215" width="17" height="29"/><rect x="177" y="275" width="17" height="29"/><rect x="145" y="353" width="17" height="29"/><rect x="247" y="261" width="13" height="25"/><rect x="247" y="331" width="13" height="25"/><rect x="318" y="180" width="18" height="31"/><rect x="318" y="273" width="18" height="31"/></g>
+      <path d="M0 513Q100 483 200 514T400 492V540H0Z" fill="var(--cover-accent)" opacity=".46"/>` }
+
   ];
   const palettes = [
     {name:'Sương sớm',base:'#dce8df',accent:'#365f5f'},

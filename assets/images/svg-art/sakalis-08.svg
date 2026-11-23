@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 540" preserveAspectRatio="xMidYMid slice" style="--cover-base:#ddd6cf;--cover-accent:#85817b"><rect width="400" height="540" fill="var(--cover-base)"/>
+      <ellipse cx="210" cy="168" rx="168" ry="60" fill="#fff" opacity=".39"/>
+      <ellipse cx="280" cy="223" rx="132" ry="53" fill="#fff" opacity=".35"/>
+      <ellipse cx="97" cy="237" rx="110" ry="48" fill="var(--cover-accent)" opacity=".19"/>
+      <g stroke="var(--cover-accent)" stroke-linecap="round" stroke-width="3" opacity=".52"><path d="M80 279 48 350M150 294l-31 64M225 275l-33 69M301 295l-34 71M356 263l-31 65M108 393l-32 68M204 384l-32 68M293 393l-32 68"/></g>
+      <g stroke="#fff" stroke-linecap="round" opacity=".81" stroke-width="2"><path d="M90 285 58 349M161 290l-31 64M241 269l-32 70M318 300l-32 68M121 398l-32 68"/></g>
+      <path d="M0 478Q70 464 137 480T263 480T400 477V540H0Z" fill="var(--cover-accent)" opacity=".38"/><rect x="8" y="8" width="384" height="524" fill="none" stroke="#85817b" stroke-opacity=".18" stroke-width="1"/></svg>

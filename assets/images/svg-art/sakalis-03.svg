@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 540" preserveAspectRatio="xMidYMid slice" style="--cover-base:#dad6cf;--cover-accent:#6d6966"><rect width="400" height="540" fill="var(--cover-base)"/>
+      <circle cx="230" cy="213" r="130" fill="#fff" opacity=".08"/>
+      <circle cx="230" cy="213" r="108" fill="var(--cover-accent)" opacity=".47"/>
+      <circle cx="265" cy="181" r="89" fill="var(--cover-base)"/>
+      <g fill="none" stroke="#fff" opacity=".43" stroke-width="1"><ellipse cx="203" cy="230" rx="172" ry="76" transform="rotate(-29 203 230)"/><ellipse cx="203" cy="230" rx="185" ry="92" transform="rotate(-29 203 230)"/><circle cx="205" cy="206" r="151" stroke-dasharray="3 10"/></g>
+      <g fill="#fff" opacity=".78"><circle cx="62" cy="119" r="3"/><circle cx="91" cy="269" r="2"/><circle cx="332" cy="84" r="2"/><circle cx="343" cy="328" r="4"/><circle cx="116" cy="371" r="1.7"/><circle cx="288" cy="387" r="1.7"/></g>
+      <g stroke="#fff" stroke-width="1.6" opacity=".63"><path d="M95 104v22M84 115h22M324 270v31M308 285h31M95 336v17M87 344h17"/></g>
+      <path d="M0 459Q103 406 213 458T400 442V540H0Z" fill="var(--cover-accent)" opacity=".3"/><rect x="8" y="8" width="384" height="524" fill="none" stroke="#6d6966" stroke-opacity=".18" stroke-width="1"/></svg>

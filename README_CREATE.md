@@ -6,7 +6,7 @@
 - Có thể dùng bản **Sakalis_Create_Standalone.html** chạy độc lập (CSS và JS nằm trong một HTML).
 
 ## Tính năng đã làm
-- 8 bìa sách vector SVG minh họa trực tiếp; chọn bìa, 8 bảng màu, tùy chỉnh độc lập màu nền và màu họa tiết.
+- 13 bìa sách vector SVG (8 gốc + 5 mới) minh họa trực tiếp; chọn bìa, 8 bảng màu, tùy chỉnh độc lập màu nền và màu họa tiết.
 - Tên tác phẩm, dòng giới thiệu và tác giả cập nhật trực tiếp trên bìa và trang viết.
 - Trình soạn thảo `contenteditable`: in đậm, nghiêng, gạch dưới/gạch ngang, H2/H3, trích dẫn, danh sách số/ký hiệu, căn trái/giữa/phải, liên kết, đường ngang, font chữ, cỡ chữ, màu chữ, tô sáng, xóa định dạng, undo/redo.
 - Chọn giấy ngà/trắng/xám/hồng; chỉnh cỡ chữ nội dung, giãn dòng, font chính; đếm từ và ký tự.
