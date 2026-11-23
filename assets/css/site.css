@@ -406,3 +406,55 @@ body[data-page="home"] .site-head:before{content:"";position:absolute;left:0;rig
 @media(max-width:1180px){.hero-watercolor{grid-template-columns:1fr 1.2fr;padding-inline:28px}.hero-watercolor__quote{font-size:18px;max-width:145px}}
 @media(max-width:890px){.head-actions .head-season span{display:none}.head-season{width:39px;padding:0;justify-content:center}.hero-watercolor{grid-template-columns:1fr;gap:8px;min-height:0;padding:34px 24px 24px}.hero-watercolor__copy{max-width:none;padding:0}.hero-watercolor__copy h1{font-size:clamp(50px,12vw,74px)}.hero-watercolor__art{min-height:280px}.hero-watercolor__moon{right:14%;top:2%;width:min(350px,62%)}.hero-watercolor__quote{right:4%;top:30%;font-size:17px;max-width:125px}}
 @media(max-width:600px){body[data-page="home"] .site-head:before{height:2px}.hero-watercolor{margin-top:0;border-radius:0 0 8px 8px;padding:28px 18px 18px}.hero-watercolor__eyebrow{font-size:8px}.hero-watercolor__copy h1{font-size:clamp(42px,14vw,61px)}.hero-watercolor__copy p{font-size:12px;line-height:1.8;margin-bottom:18px}.hero-watercolor__actions{gap:10px}.hero-watercolor__actions .button-ink,.hero-watercolor__actions .button-ghost{padding:12px 14px;font-size:11px}.hero-watercolor__art{min-height:230px}.hero-watercolor__moon{right:8%;width:58%;top:8%}.hero-watercolor__quote{display:none}.hero-watercolor__scene{left:0;width:108%}}
+
+
+/* SAKALIS v10.1 / Poem covers: one seamless illustrated surface, NOT picture + separate text */
+.archive-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px 23px;align-items:start}
+.archive-card.archive-card--cover{position:relative;display:block;min-width:0;aspect-ratio:3/4;height:auto;min-height:0;padding:0;isolation:isolate;overflow:hidden;border-radius:21px;border:1px solid color-mix(in srgb,var(--art-ink) 23%,transparent);background:var(--art-base);color:var(--art-ink);box-shadow:0 3px 0 #8b7d6c20,0 18px 32px #28221a20,0 30px 60px #28221a0c;transition:transform .6s var(--ease),box-shadow .6s var(--ease)}
+.archive-card--cover:before{content:"";position:absolute;inset:10px;border:1px solid color-mix(in srgb,var(--art-ink) 21%,transparent);border-radius:13px;z-index:2;pointer-events:none}
+.archive-card--cover .archive-card__illustration{position:absolute;inset:0;z-index:0;overflow:hidden}
+.archive-card--cover .archive-card__illustration>svg{display:block;width:100%;height:100%;transform:scale(1.01);transition:transform 1.2s var(--ease),filter .8s var(--ease)}
+.archive-card--cover .archive-card__veil{position:absolute;z-index:1;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 0%,transparent 26%,color-mix(in srgb,var(--art-base) 15%,transparent) 37%,color-mix(in srgb,var(--art-base) 75%,transparent) 58%,color-mix(in srgb,var(--art-base) 96%,transparent) 77%,var(--art-base) 100%)}
+.archive-card--cover .archive-card__hit{position:absolute;inset:0;z-index:3;display:block}
+.archive-card--cover .archive-card__hit:focus-visible{outline:3px solid var(--art-accent);outline-offset:-5px;border-radius:20px}
+.archive-card--cover .archive-card__imprint{position:absolute;z-index:4;top:24px;left:25px;right:24px;display:flex;justify-content:space-between;gap:12px;pointer-events:none;font:600 9px/1.4 var(--sans);letter-spacing:.15em;text-transform:uppercase;color:var(--art-ink)}
+.archive-card--cover .archive-card__imprint span:last-child{text-align:right;white-space:nowrap;opacity:.82}
+.archive-card--cover .archive-card__content{position:absolute;z-index:4;left:25px;right:25px;bottom:72px;pointer-events:none}
+.archive-card--cover .archive-card__category{font:600 9px/1.5 var(--sans);letter-spacing:.11em;text-transform:uppercase;opacity:.74;margin-bottom:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.archive-card--cover .archive-card__content h2{font:400 clamp(25px,2.4vw,37px)/1.07 var(--serif);letter-spacing:-.045em;margin:0 0 13px;color:var(--art-ink);overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;text-wrap:balance;overflow-wrap:anywhere}
+.archive-card--cover .archive-card__content p{font:italic 14px/1.55 var(--poem);min-height:1.5em;max-height:3.1em;overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;margin:0;color:var(--art-ink);opacity:.75}
+.archive-card--cover .archive-card__footer{position:absolute;z-index:5;left:25px;right:25px;bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:11px;border-top:1px solid color-mix(in srgb,var(--art-ink) 29%,transparent);color:var(--art-ink)}
+.archive-card--cover .archive-card__footer>span{display:inline-flex;align-items:center;gap:12px;font:600 11px/1.5 var(--sans);pointer-events:none}
+.archive-card--cover .archive-card__footer>span svg{transition:transform .4s var(--ease)}
+.archive-card--cover .archive-card__save{position:relative;z-index:6;width:35px;height:35px;flex-shrink:0;background:color-mix(in srgb,var(--art-base) 55%,transparent);border:1px solid color-mix(in srgb,var(--art-ink) 30%,transparent);color:var(--art-ink);border-radius:50%;display:grid;place-items:center;backdrop-filter:blur(5px)}
+.archive-card--cover .archive-card__save:hover,.archive-card--cover .archive-card__save.saved{background:var(--art-ink);color:var(--art-base);border-color:var(--art-ink)}
+@media(hover:hover){.archive-card--cover:hover{transform:translateY(-10px) rotate(-.6deg)!important;box-shadow:0 30px 60px #27221b2e,0 50px 90px #27221b13}.archive-card--cover:hover .archive-card__illustration>svg{transform:scale(1.09) rotate(1deg)}.archive-card--cover:hover .archive-card__footer>span svg{transform:translate(4px,-4px)}}
+@media(max-width:1100px){.archive-grid{gap:18px}}
+@media(max-width:900px){.archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.archive-card--cover .archive-card__content h2{font-size:clamp(26px,4.2vw,34px)}}
+@media(max-width:600px){.archive-grid{gap:12px}.archive-card.archive-card--cover{border-radius:17px}.archive-card--cover:before{inset:6px;border-radius:11px}.archive-card--cover .archive-card__imprint{top:14px;left:14px;right:12px;font-size:6px;gap:5px;letter-spacing:.06em}.archive-card--cover .archive-card__content{left:14px;right:14px;bottom:54px}.archive-card--cover .archive-card__category{font-size:7px;margin-bottom:6px;letter-spacing:.03em}.archive-card--cover .archive-card__content h2{font-size:clamp(18px,4.5vw,25px);line-height:1.08;margin-bottom:6px;-webkit-line-clamp:3}.archive-card--cover .archive-card__content p{font-size:10px;line-height:1.35;-webkit-line-clamp:1;max-height:1.4em}.archive-card--cover .archive-card__footer{left:14px;right:14px;bottom:10px;padding-top:7px}.archive-card--cover .archive-card__footer>span{font-size:8px;gap:5px}.archive-card--cover .archive-card__footer svg{width:13px}.archive-card--cover .archive-card__save{width:27px;height:27px}.archive-card--cover .archive-card__save svg{width:13px;height:13px}}
+@media(max-width:380px){.archive-card--cover .archive-card__content h2{font-size:17px}.archive-card--cover .archive-card__content p{display:none}.archive-card--cover .archive-card__imprint span:last-child{display:none}}
+@media(prefers-reduced-motion:reduce){.archive-card--cover:hover{transform:none!important}.archive-card--cover .archive-card__illustration>svg{transition:none}}
+
+/* Collection table of contents remains an INDEPENDENT component; full-bleed illustrated chapter cover */
+.chapter-card.chapter-card--cover{position:relative;min-height:190px;padding:0;overflow:hidden;background:var(--art-base);color:var(--art-ink);border:1px solid color-mix(in srgb,var(--art-ink) 20%,transparent);isolation:isolate;border-radius:19px}
+.chapter-card--cover .chapter-card__art{position:absolute;inset:0;z-index:0;opacity:.72;overflow:hidden}
+.chapter-card--cover .chapter-card__art svg{width:100%;height:100%;display:block;transform:scale(1.15);transition:transform .8s var(--ease)}
+.chapter-card--cover .chapter-card__veil{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,var(--art-base) 0%,color-mix(in srgb,var(--art-base) 97%,transparent) 48%,color-mix(in srgb,var(--art-base) 35%,transparent) 100%);pointer-events:none}
+.chapter-card--cover .chapter-card__hit{position:absolute;inset:0;z-index:2}
+.chapter-card--cover .chapter-card__content{position:relative;z-index:3;padding:22px 56px 22px 24px;pointer-events:none;max-width:83%;display:flex;flex-direction:column;justify-content:center;min-height:190px}
+.chapter-card--cover .chapter-card__kicker{font:600 10px/1.4 var(--sans);letter-spacing:.12em;opacity:.7}
+.chapter-card--cover .chapter-card__content h3{font:400 clamp(25px,2.4vw,33px)/1.05 var(--serif);margin:9px 0;color:var(--art-ink);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.chapter-card--cover .chapter-card__content p{font:italic 12px/1.45 var(--poem);margin:0 0 13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--art-ink);opacity:.75}
+.chapter-card--cover .chapter-card__action{font:600 11px var(--sans);display:flex;align-items:center;gap:8px;border-top:1px solid color-mix(in srgb,var(--art-ink) 20%,transparent);padding-top:9px}
+.chapter-card--cover .chapter-save{z-index:5;right:14px;top:13px;color:var(--art-ink);background:color-mix(in srgb,var(--art-base) 70%,transparent);border-color:color-mix(in srgb,var(--art-ink) 30%,transparent)}
+.chapter-card--cover:hover .chapter-card__art svg{transform:scale(1.23)}
+@media(max-width:680px){.chapter-card--cover .chapter-card__content{min-height:166px;padding:16px 44px 16px 17px;max-width:100%}.chapter-card.chapter-card--cover{min-height:166px}.chapter-card--cover .chapter-card__content h3{font-size:25px}}
+
+/* Book-cover typography: title printed on the FRONT, not a caption beneath artwork */
+.archive-card--cover .archive-card__content{top:67px;bottom:67px;display:flex;flex-direction:column;justify-content:flex-start}
+.archive-card--cover .archive-card__category{margin-bottom:9px}
+.archive-card--cover .archive-card__content h2{margin:0;font-size:clamp(29px,2.8vw,42px);line-height:1.05;max-width:100%}
+.archive-card--cover .archive-card__content p{margin-top:auto;max-height:3.1em}
+.archive-card--cover .archive-card__veil{background:linear-gradient(180deg,var(--art-base) 0%,color-mix(in srgb,var(--art-base) 98%,transparent) 14%,color-mix(in srgb,var(--art-base) 62%,transparent) 33%,transparent 50%,color-mix(in srgb,var(--art-base) 28%,transparent) 67%,color-mix(in srgb,var(--art-base) 91%,transparent) 82%,var(--art-base) 100%)}
+@media(max-width:600px){.archive-card--cover .archive-card__content{top:33px;bottom:53px}.archive-card--cover .archive-card__category{margin-bottom:5px}.archive-card--cover .archive-card__content h2{font-size:clamp(18px,4.7vw,24px);line-height:1.04}.archive-card--cover .archive-card__content p{font-size:9px;line-height:1.35}}
+@media(max-width:380px){.archive-card--cover .archive-card__content{top:31px}.archive-card--cover .archive-card__content h2{font-size:17px}}

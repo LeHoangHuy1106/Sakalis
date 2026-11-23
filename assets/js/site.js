@@ -61,11 +61,30 @@ function bookCard(group,i=0){
 }
 // Thư viện và mục lục tập thơ dùng hai component độc lập.
 function archiveCard(p,i=0){
- const href=poemURL(p),lines=leadLines(p).slice(0,2);
- return `<article class="archive-card appear" style="--delay:${i%6*55}ms"><a class="archive-art" href="${href}">${image(p,i)}<span class="archive-number">${String(i+1).padStart(2,'0')} · THƠ</span><span class="archive-open">${svg('north',20)}</span></a><div class="archive-copy"><div class="archive-meta"><span>${esc(p.collection||p.topics[0]||'Sakalis')}</span>${saveButton(p)}</div><h2><a href="${href}">${esc(p.title)}</a></h2><div class="archive-verse">${lines.map(l=>`<span>${esc(l)}</span>`).join('')}</div><a class="archive-read" href="${href}">Đọc bài thơ ${svg('arrow',17)}</a></div></article>`;
+ const href=poemURL(p),theme=sakalisCoverTheme(String(p.id||p.slug||p.title)+' • '+p.title);
+ const cover=sakalisCoverSVG(String(p.id||p.slug||p.title)+' • '+p.title);
+ const excerptText=leadLines(p).slice(0,2).join(' / ');
+ const meta=p.collection||p.topics?.[0]||'Thơ & ký ức';
+ return `<article class="archive-card archive-card--cover appear" style="--delay:${i%6*55}ms;--art-base:${theme.base};--art-ink:${theme.ink};--art-accent:${theme.accent}">
+   <div class="archive-card__illustration" aria-hidden="true">${cover}</div>
+   <div class="archive-card__veil" aria-hidden="true"></div>
+   <a class="archive-card__hit" href="${href}" aria-label="Đọc bài thơ ${esc(p.title)}"></a>
+   <div class="archive-card__imprint"><span>SAKALIS · BNA</span><span>THƠ / ${String(i+1).padStart(2,'0')}</span></div>
+   <div class="archive-card__content"><div class="archive-card__category">${esc(meta)}${p.year?` <span>· ${esc(p.year)}</span>`:''}</div>
+      <h2>${esc(p.title)}</h2><p>${esc(excerptText)}</p>
+   </div>
+   <div class="archive-card__footer"><span>Đọc bài thơ ${svg('north',17)}</span>${saveButton(p,'archive-card__save')}</div>
+ </article>`;
 }
 const libraryCards=ps=>`<div class="archive-grid">${ps.map(archiveCard).join('')}</div>`;
-function chapterCard(p,i=0){const href=poemURL(p);return `<article class="chapter-card appear" style="--delay:${i%6*45}ms"><a class="chapter-link" href="${href}"><div class="chapter-thumb">${image(p,i)}<span>${String(i+1).padStart(2,'0')}</span></div><div class="chapter-copy"><span class="chapter-meta">BÀI THƠ ${String(i+1).padStart(2,'0')} ${p.year?'· '+esc(p.year):''}</span><h3>${esc(p.title)}</h3><p>${esc(leadLines(p)[0]||'')}</p><span class="chapter-action">Mở trang thơ ${svg('arrow',15)}</span></div></a>${saveButton(p,'chapter-save')}</article>`;}
+function chapterCard(p,i=0){const href=poemURL(p),theme=sakalisCoverTheme('chapter '+String(p.id||p.slug||p.title));
+ return `<article class="chapter-card chapter-card--cover appear" style="--delay:${i%6*45}ms;--art-base:${theme.base};--art-ink:${theme.ink};--art-accent:${theme.accent}">
+   <div class="chapter-card__art" aria-hidden="true">${sakalisCoverSVG('chapter '+String(p.id||p.slug||p.title))}</div>
+   <div class="chapter-card__veil" aria-hidden="true"></div>
+   <a class="chapter-card__hit" href="${href}" aria-label="Đọc bài thơ ${esc(p.title)}"></a>
+   <div class="chapter-card__content"><div class="chapter-card__kicker">BÀI ${String(i+1).padStart(2,'0')} ${p.year?'· '+esc(p.year):''}</div><h3>${esc(p.title)}</h3><p>${esc(leadLines(p)[0]||'')}</p><div class="chapter-card__action">Đọc bài thơ ${svg('arrow',15)}</div></div>
+   ${saveButton(p,'chapter-save')}
+ </article>`;}
 const chapterCards=ps=>`<div class="chapter-grid">${ps.map(chapterCard).join('')}</div>`;
 const cards=(ps,types)=>`<div class="poem-gallery">${ps.map((p,i)=>poemCard(p,i,types?.[i%types.length])).join('')}</div>`;
 const topicPanel=(g,i)=>`<a class="mood-card appear" href="${topicURL(g.name)}" style="--delay:${i%6*70}ms"><span class="mood-count">${String(i+1).padStart(2,'0')} / CẢM XÚC</span><div class="mood-background"><img src="./assets/images/image-${String((i*3+2)%11+1).padStart(2,'0')}.webp" loading="lazy" alt=""></div><span class="mood-word">${esc(g.name)}</span><span class="mood-end">${g.poems.length} bài thơ ${svg('north',18)}</span></a>`;
