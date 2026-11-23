@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#191d22">
+  <meta name="description" content="Sakalis Studio: không gian soạn thảo và thiết kế bìa tác phẩm bằng SVG.">
+  <title>Sakalis Studio · Không gian sáng tác</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600;7..72,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="./assets/css/editor.css?v=1.0.0">
+  <script defer src="./assets/js/editor.js?v=1.0.0"></script>
+</head>
+<body>
+  <div class="studio-app" id="studio-app">
+    <header class="topbar">
+      <div class="brand-wrap">
+        <a class="back-link" href="./index.html" aria-label="Về Sakalis" title="Về Sakalis">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 12H4m6-6-6 6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="wordmark"><strong><span class="brand-flower">✳</span> sakalis</strong><small>STUDIO</small></div>
+        <div class="top-divider"></div>
+        <div class="top-title"><span>Không gian sáng tác</span><small>Biến từng câu chữ thành một tác phẩm</small></div>
+      </div>
+      <div class="topbar-actions">
+        <div class="unsaved-state"><span class="state-dot"></span> Bản nháp chưa lưu</div>
+        <button class="top-button" id="preview-button" title="Xem trước tác phẩm" aria-pressed="false" type="button">
+          <svg viewBox="0 0 24 24"><path d="M2.5 12s3.3-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.3 6.5-9.5 6.5S2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span>Xem trước</span>
+        </button>
+        <button class="top-button top-button-accent" id="focus-button" title="Chế độ tập trung" aria-pressed="false" type="button">
+          <svg viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5"/></svg>
+          <span>Tập trung</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="app-layout">
+      <aside class="covers-sidebar" aria-label="Thư viện bìa SVG">
+        <div class="aside-head">
+          <div class="eyebrow"><span class="section-sparkle">✦</span> BỘ SƯU TẬP BÌA</div>
+          <h2>Bìa kể<br><em>câu chuyện.</em></h2>
+          <p>Chọn một tác phẩm SVG, rồi phủ lên nó màu sắc của riêng mày.</p>
+        </div>
+        <div class="gallery-head"><span>08 MẪU MINH HỌA</span><span>SVG ✧</span></div>
+        <div class="cover-gallery" id="cover-gallery" role="group" aria-label="Chọn mẫu bìa"></div>
+        <div class="palette-wrap">
+          <div class="gallery-head"><span>BẢNG MÀU</span><span>TÙY CHỈNH</span></div>
+          <div class="palette-grid" id="palette-grid" role="group" aria-label="Chọn bảng màu"></div>
+          <div class="custom-color-row">
+            <label class="color-control"><span>Màu nền</span><input type="color" id="cover-base" value="#dce8df" aria-label="Màu nền bìa"></label>
+            <label class="color-control"><span>Màu họa tiết</span><input type="color" id="cover-accent" value="#365f5f" aria-label="Màu minh họa bìa"></label>
+          </div>
+        </div>
+        <div class="aside-foot"><span class="aside-foot-icon">✿</span><span>Mọi hình vẽ đều là vector SVG. Đổi màu tùy thích, không vỡ nét.</span></div>
+      </aside>
+
+      <main class="creative-workspace">
+        <div class="workspace-head">
+          <div>
+            <div class="eyebrow">SAKALIS STUDIO <span class="sep-dot">·</span> BẢN THẢO SỐ 01</div>
+            <h1>Một khoảng trời <em>để viết.</em></h1>
+            <p>Nhẹ nhàng với cảm hứng. Tự do với từng câu chữ.</p>
+          </div>
+          <div class="mode-tag"><span class="mode-tag-icon">❧</span><span>Viết theo cách của bạn</span></div>
+        </div>
+
+        <div class="artboards">
+          <section class="cover-work-area" aria-label="Bìa tác phẩm đang chọn">
+            <div class="artboard-label"><span>01 / THIẾT KẾ BÌA</span><span class="live-dot"></span></div>
+            <div class="cover-scene">
+              <div class="cover-book" id="cover-book" style="--cover-base:#dce8df;--cover-accent:#365f5f;--cover-ink:#1e3839">
+                <div class="cover-art" id="cover-art" aria-hidden="true"></div>
+                <div class="cover-face-gradient" aria-hidden="true"></div>
+                <div class="cover-content">
+                  <div class="cover-topline"><span>SAKALIS <b>✳</b> ATELIER</span><span>01</span></div>
+                  <div class="cover-text">
+                    <span class="cover-series">MỘT TÁC PHẨM NHỎ</span>
+                    <h2 id="cover-display-title">Những điều<br>chưa nói</h2>
+                    <p id="cover-display-subtitle">Lặng nghe những mùa đi qua</p>
+                  </div>
+                  <div class="cover-author"><span id="cover-display-author">Tên tác giả</span><span>✦</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="cover-under"><span>✧ Bản xem trước bìa</span><span>Được vẽ bằng SVG</span></div>
+            <div class="cover-nudge"><span class="cover-nudge-icon">↗</span><p>Đổi bìa và màu sắc ở cột trái. Chỉnh tên tác phẩm ở cột phải.</p></div>
+          </section>
+
+          <section class="write-work-area" aria-label="Trình soạn thảo nội dung">
+            <div class="artboard-label"><span>02 / BẢN THẢO</span><span class="live-badge">ĐANG SOẠN THẢO</span></div>
+            <div class="editor-shell">
+              <div class="document-header">
+                <div class="doc-mini-icon">✳</div>
+                <div><span class="doc-meta-caption">TÁC PHẨM CỦA BẠN</span><h2 id="document-display-title">Những điều chưa nói</h2></div>
+                <span class="doc-page-number">NO. 001</span>
+              </div>
+
+              <div class="format-toolbar" id="format-toolbar" role="toolbar" aria-label="Công cụ định dạng nội dung">
+                <div class="toolbar-row toolbar-row-main">
+                  <label class="toolbar-select-label" title="Kiểu đoạn văn"><span class="sr-only">Kiểu đoạn</span>
+                    <select id="block-format" class="toolbar-select">
+                      <option value="P">Đoạn văn</option>
+                      <option value="H2">Tiêu đề lớn</option>
+                      <option value="H3">Tiêu đề nhỏ</option>
+                      <option value="BLOCKQUOTE">Trích dẫn</option>
+                    </select>
+                  </label>
+                  <label class="toolbar-select-label toolbar-font" title="Font chữ"><span class="sr-only">Font chữ</span>
+                    <select id="inline-font" class="toolbar-select">
+                      <option value="Literata">Literata</option>
+                      <option value="Georgia">Georgia</option>
+                      <option value="Arial">Arial</option>
+                      <option value="Times New Roman">Times New Roman</option>
+                      <option value="Be Vietnam Pro">Be Vietnam Pro</option>
+                    </select>
+                  </label>
+                  <label class="toolbar-select-label toolbar-size" title="Cỡ chữ"><span class="sr-only">Cỡ chữ</span>
+                    <select id="inline-size" class="toolbar-select">
+                      <option value="14">14</option><option value="16">16</option><option value="18" selected>18</option><option value="20">20</option><option value="22">22</option><option value="26">26</option><option value="30">30</option><option value="36">36</option><option value="44">44</option>
+                    </select>
+                  </label>
+                </div>
+                <div class="toolbar-row toolbar-row-icons">
+                  <div class="tool-group" role="group" aria-label="Định dạng chữ">
+                    <button type="button" data-command="bold" class="tool-button tool-bold" title="In đậm (Ctrl+B)" aria-label="In đậm"><b>B</b></button>
+                    <button type="button" data-command="italic" class="tool-button tool-italic" title="In nghiêng (Ctrl+I)" aria-label="In nghiêng"><i>I</i></button>
+                    <button type="button" data-command="underline" class="tool-button tool-underline" title="Gạch dưới (Ctrl+U)" aria-label="Gạch dưới"><u>U</u></button>
+                    <button type="button" data-command="strikeThrough" class="tool-button" title="Gạch ngang" aria-label="Gạch ngang"><s>S</s></button>
+                  </div>
+                  <span class="tool-divider"></span>
+                  <div class="tool-group" role="group" aria-label="Màu chữ">
+                    <label class="tool-color" title="Màu chữ"><span class="text-color-letter">A</span><input type="color" id="font-color" value="#303334" aria-label="Màu chữ đang chọn"></label>
+                    <label class="tool-color tool-highlight" title="Tô sáng"><span class="marker-letter">✎</span><input type="color" id="highlight-color" value="#f2da8f" aria-label="Màu tô sáng"></label>
+                  </div>
+                  <span class="tool-divider"></span>
+                  <div class="tool-group" role="group" aria-label="Căn lề">
+                    <button type="button" data-command="justifyLeft" class="tool-button" title="Căn trái" aria-label="Căn trái"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 10h10M4 14h16M4 18h10"/></svg></button>
+                    <button type="button" data-command="justifyCenter" class="tool-button" title="Căn giữa" aria-label="Căn giữa"><svg viewBox="0 0 24 24"><path d="M4 6h16M7 10h10M4 14h16M7 18h10"/></svg></button>
+                    <button type="button" data-command="justifyRight" class="tool-button" title="Căn phải" aria-label="Căn phải"><svg viewBox="0 0 24 24"><path d="M4 6h16M10 10h10M4 14h16M10 18h10"/></svg></button>
+                  </div>
+                  <span class="tool-divider"></span>
+                  <div class="tool-group" role="group" aria-label="Danh sách và trích dẫn">
+                    <button type="button" data-command="insertUnorderedList" class="tool-button" title="Danh sách đầu dòng" aria-label="Danh sách đầu dòng"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r=".8"/><circle cx="4.5" cy="12" r=".8"/><circle cx="4.5" cy="18" r=".8"/></svg></button>
+                    <button type="button" data-command="insertOrderedList" class="tool-button" title="Danh sách đánh số" aria-label="Danh sách đánh số"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M3 5h2v4M3 15c2-2 3-1 3 0s-3 3-3 3h4"/></svg></button>
+                    <button type="button" id="quote-button" class="tool-button" title="Trích dẫn" aria-label="Trích dẫn"><svg viewBox="0 0 24 24"><path d="M9 11H4c0-4 2-6 5-6m11 6h-5c0-4 2-6 5-6M4 11v6h6v-6H4Zm11 0v6h6v-6h-6Z"/></svg></button>
+                  </div>
+                  <span class="tool-divider"></span>
+                  <div class="tool-group" role="group" aria-label="Chèn và lịch sử">
+                    <button type="button" id="link-button" class="tool-button" title="Chèn liên kết (Ctrl+K)" aria-label="Chèn liên kết"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.1.1l2.5-2.5a5 5 0 0 0-7.1-7.1l-1.4 1.4M14 11a5 5 0 0 0-7.1-.1l-2.5 2.5a5 5 0 0 0 7.1 7.1l1.4-1.4"/></svg></button>
+                    <button type="button" data-command="insertHorizontalRule" class="tool-button" title="Đường phân cách" aria-label="Đường phân cách"><svg viewBox="0 0 24 24"><path d="M3 12h18"/></svg></button>
+                    <button type="button" data-command="removeFormat" class="tool-button" title="Xóa định dạng vùng chọn" aria-label="Xóa định dạng"><svg viewBox="0 0 24 24"><path d="M4 19h15M8 5h10M13 5 8 17M4 4l16 16"/></svg></button>
+                    <button type="button" data-command="undo" class="tool-button" title="Hoàn tác (Ctrl+Z)" aria-label="Hoàn tác"><svg viewBox="0 0 24 24"><path d="M9 7 4 12l5 5M4 12h11a5 5 0 0 1 0 10"/></svg></button>
+                    <button type="button" data-command="redo" class="tool-button" title="Làm lại (Ctrl+Y)" aria-label="Làm lại"><svg viewBox="0 0 24 24"><path d="m15 7 5 5-5 5m5-5H9a5 5 0 0 0 0 10"/></svg></button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="paper-outer">
+                <article class="paper" id="paper" data-paper="cream">
+                  <div class="paper-ornamental-head">SAKALIS <span>✳</span> BẢN THẢO</div>
+                  <div class="editable-content" id="editor" contenteditable="true" role="textbox" aria-label="Nội dung tác phẩm" aria-multiline="true" spellcheck="true">
+                    <p>Có những điều chẳng cần nói thành tên,<br>chỉ cần một buổi chiều đi thật chậm.</p>
+                    <p>Ta nhặt nắng qua ô cửa nhỏ,<br>và để lòng mình lặng giữa mùa xa.</p>
+                    <p>Cứ viết thôi, bằng tất cả dịu dàng.<br>Rồi một ngày, câu chữ sẽ nở hoa.</p>
+                  </div>
+                  <div class="paper-signature">✦ <span id="paper-author">Tên tác giả</span> ✦</div>
+                </article>
+              </div>
+              <footer class="editor-statusbar"><span><span class="wordcount" id="word-count">0</span> từ <span class="status-separator">·</span> <span id="char-count">0</span> ký tự</span><span><span class="small-circle"></span> Chưa lưu vào hệ thống</span></footer>
+            </div>
+          </section>
+        </div>
+        <div class="workspace-bottom"><span>✳</span><p>Mỗi bản thảo đều bắt đầu bằng một dòng chữ.</p><span>SAKALIS / STUDIO</span></div>
+      </main>
+
+      <aside class="inspector-sidebar" aria-label="Tùy chỉnh tác phẩm">
+        <div class="inspector-intro"><div class="eyebrow">CHỈNH SỬA CHI TIẾT</div><h2>Dấu ấn <em>của bạn.</em></h2><p>Những thay đổi ở đây xuất hiện ngay trên bìa và trang viết.</p></div>
+        <div class="inspector-section">
+          <div class="inspector-section-title"><span>01</span><h3>Thông tin tác phẩm</h3></div>
+          <label class="field-label" for="work-title">TÊN TÁC PHẨM</label>
+          <input class="form-control" type="text" id="work-title" maxlength="110" value="Những điều chưa nói" placeholder="Tên bài thơ, tác phẩm...">
+          <label class="field-label" for="work-subtitle">DÒNG GIỚI THIỆU</label>
+          <input class="form-control" type="text" id="work-subtitle" maxlength="130" value="Lặng nghe những mùa đi qua" placeholder="Một câu về tác phẩm...">
+          <label class="field-label" for="work-author">TÊN TÁC GIẢ</label>
+          <input class="form-control" type="text" id="work-author" maxlength="60" value="Tên tác giả" placeholder="Tên tác giả...">
+        </div>
+        <div class="inspector-section">
+          <div class="inspector-section-title"><span>02</span><h3>Chất liệu trang giấy</h3></div>
+          <div class="paper-palette" id="paper-palette" role="group" aria-label="Chọn màu giấy">
+            <button class="paper-color-button selected" data-paper="cream" type="button"><i style="background:#faf7f0"></i><span>Giấy ngà</span></button>
+            <button class="paper-color-button" data-paper="white" type="button"><i style="background:#ffffff"></i><span>Trắng</span></button>
+            <button class="paper-color-button" data-paper="stone" type="button"><i style="background:#ebebea"></i><span>Xám</span></button>
+            <button class="paper-color-button" data-paper="blush" type="button"><i style="background:#f8eeee"></i><span>Hồng</span></button>
+          </div>
+          <div class="range-field"><label for="body-font-size"><span>Cỡ chữ mặc định</span><output id="body-font-size-label">18px</output></label><input type="range" id="body-font-size" min="14" max="26" value="18"></div>
+          <div class="range-field"><label for="line-spacing"><span>Giãn dòng</span><output id="line-spacing-label">1.85</output></label><input type="range" id="line-spacing" min="1.3" max="2.4" step=".05" value="1.85"></div>
+          <label class="field-label" for="document-font">FONT NỘI DUNG MẶC ĐỊNH</label>
+          <select id="document-font" class="form-control">
+            <option value="literata">Literata · Văn học</option>
+            <option value="georgia">Georgia · Cổ điển</option>
+            <option value="sans">Be Vietnam Pro · Hiện đại</option>
+          </select>
+        </div>
+        <div class="inspector-note"><span>✧</span><div><strong>Đây là không gian sáng tác thử nghiệm.</strong><p>Chưa có chức năng lưu, xuất bản hay đồng bộ. Đóng trang hoặc tải lại có thể mất nội dung đang viết.</p></div></div>
+      </aside>
+    </div>
+    <div class="mobile-bottom-label">✳ SAKALIS STUDIO <span>·</span> VIẾT ĐỂ NHỚ</div>
+    <div id="toast" class="editor-toast" role="status" aria-live="polite"></div>
+  </div>
+</body>
+</html>
