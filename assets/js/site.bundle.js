@@ -419,7 +419,8 @@ function bookCard(group,i=0){
 function archiveCard(p,i=0){
  const href=poemURL(p),theme=sakalisCoverTheme(String(p.id||p.slug||p.title)+' • '+p.title);
  const cover=sakalisCoverSVG(String(p.id||p.slug||p.title)+' • '+p.title);
- const excerptText=leadLines(p).slice(0,2).join(' / ');
+ const excerptLines=leadLines(p).slice(0,2);
+ const verseMarkup=excerptLines.map(line=>`<span class="archive-card__verse-line">${esc(line)}</span>`).join('');
  const meta=p.collection||p.topics?.[0]||'Thơ & ký ức';
  return `<article class="archive-card archive-card--cover appear" style="--delay:${i%6*55}ms;--art-base:${theme.base};--art-ink:${theme.ink};--art-accent:${theme.accent}">
    <div class="archive-card__illustration" aria-hidden="true">${cover}</div>
@@ -427,7 +428,7 @@ function archiveCard(p,i=0){
    <a class="archive-card__hit" href="${href}" aria-label="Đọc bài thơ ${esc(p.title)}"></a>
    <div class="archive-card__imprint"><span>SAKALIS · BNA</span><span>THƠ / ${String(i+1).padStart(2,'0')}</span></div>
    <div class="archive-card__content"><div class="archive-card__category">${esc(meta)}${p.year?` <span>· ${esc(p.year)}</span>`:''}</div>
-      <h2>${esc(p.title)}</h2><p>${esc(excerptText)}</p>
+      <h2>${esc(p.title)}</h2><div class="archive-card__excerpt" aria-label="Hai dòng đầu bài thơ">${verseMarkup}</div>
    </div>
    <div class="archive-card__footer"><span>Đọc bài thơ ${svg('north',17)}</span>${saveButton(p,'archive-card__save')}</div>
  </article>`;

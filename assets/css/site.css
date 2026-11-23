@@ -458,3 +458,93 @@ body[data-page="home"] .site-head:before{content:"";position:absolute;left:0;rig
 .archive-card--cover .archive-card__veil{background:linear-gradient(180deg,var(--art-base) 0%,color-mix(in srgb,var(--art-base) 98%,transparent) 14%,color-mix(in srgb,var(--art-base) 62%,transparent) 33%,transparent 50%,color-mix(in srgb,var(--art-base) 28%,transparent) 67%,color-mix(in srgb,var(--art-base) 91%,transparent) 82%,var(--art-base) 100%)}
 @media(max-width:600px){.archive-card--cover .archive-card__content{top:33px;bottom:53px}.archive-card--cover .archive-card__category{margin-bottom:5px}.archive-card--cover .archive-card__content h2{font-size:clamp(18px,4.7vw,24px);line-height:1.04}.archive-card--cover .archive-card__content p{font-size:9px;line-height:1.35}}
 @media(max-width:380px){.archive-card--cover .archive-card__content{top:31px}.archive-card--cover .archive-card__content h2{font-size:17px}}
+
+
+/* Sakalis v10.2: four small cover cards per desktop row; two complete verse lines */
+.archive-grid{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  column-gap:18px;
+  row-gap:23px;
+}
+.archive-card.archive-card--cover{aspect-ratio:3/4}
+.archive-card--cover .archive-card__imprint{left:18px;right:18px;top:17px;font-size:8px;letter-spacing:.11em}
+.archive-card--cover .archive-card__content{
+  top:49px;
+  bottom:59px;
+  left:19px;
+  right:19px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  min-width:0;
+}
+.archive-card--cover .archive-card__category{font-size:8px;line-height:1.45;margin:0 0 6px;letter-spacing:.08em}
+.archive-card--cover .archive-card__content h2{
+  font-family:'Literata',Georgia,'Times New Roman',serif;
+  font-weight:400;
+  font-size:clamp(19px,1.58vw,27px);
+  line-height:1.23;
+  letter-spacing:-.022em;
+  padding-top:.17em;
+  padding-bottom:.18em;
+  margin:0;
+  max-width:100%;
+  max-height:none;
+  display:block;
+  overflow-wrap:normal;
+  word-break:normal;
+  hyphens:none;
+  overflow:visible;
+  -webkit-line-clamp:unset;
+}
+.archive-card--cover .archive-card__excerpt{
+  margin:auto 0 0;
+  min-height:0;
+  max-height:none;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:5px;
+  color:var(--art-ink);
+  font:italic 12px/1.42 'Literata',Georgia,serif;
+  text-align:center;
+  letter-spacing:0;
+  opacity:.85;
+}
+.archive-card--cover .archive-card__verse-line{
+  display:block;
+  width:100%;
+  white-space:normal;
+  word-break:normal;
+  overflow-wrap:break-word;
+  text-overflow:clip;
+  overflow:visible;
+  text-wrap:balance;
+}
+.archive-card--cover .archive-card__footer{left:19px;right:19px;bottom:13px;padding-top:7px}
+.archive-card--cover .archive-card__footer>span{font-size:10px}
+.archive-card--cover .archive-card__save{width:31px;height:31px}
+@media(max-width:1150px){
+ .archive-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+ .archive-card--cover .archive-card__content h2{font-size:clamp(21px,2.1vw,27px)}
+}
+@media(max-width:900px){
+ .archive-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+ .archive-card--cover .archive-card__content h2{font-size:clamp(20px,3.1vw,29px)}
+}
+@media(max-width:600px){
+ .archive-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+ .archive-card--cover .archive-card__imprint{top:12px;left:11px;right:10px;font-size:6px}
+ .archive-card--cover .archive-card__content{top:32px;bottom:47px;left:11px;right:11px}
+ .archive-card--cover .archive-card__category{font-size:6px;margin-bottom:4px}
+ .archive-card--cover .archive-card__content h2{font-family:'Literata',Georgia,serif;font-size:clamp(14px,4vw,21px);line-height:1.25;padding-top:.16em;padding-bottom:.2em;margin:0}
+ .archive-card--cover .archive-card__excerpt{font-size:clamp(8px,2.1vw,11px);line-height:1.4;gap:3px}
+ .archive-card--cover .archive-card__footer{left:11px;right:11px;bottom:8px;padding-top:5px}
+ .archive-card--cover .archive-card__footer>span{font-size:8px}
+ .archive-card--cover .archive-card__save{height:25px;width:25px}
+}
+@media(max-width:380px){
+ .archive-card--cover .archive-card__content h2{font-size:clamp(13px,3.7vw,17px)}
+ .archive-card--cover .archive-card__excerpt{display:flex;font-size:8px}
+}
